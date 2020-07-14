@@ -102,9 +102,9 @@ $(document).ready(function() {
     } );
 } );
 */
-function addItemUIFunction(){
+/**function addItemUIFunction(){
   submitItem();
-}
+*/
 
 /**
  * Deletes and item in the Todo list
