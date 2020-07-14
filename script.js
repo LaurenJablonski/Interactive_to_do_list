@@ -83,7 +83,7 @@ function submitItem(){
   let todoItemname = document.getElementById("nameTextboxID").value;
   let todoItemDesc = document.getElementById("descriptionTextboxID").value;
   let todoItemDate = document.getElementById("dateTextboxID").value;
-  /**alert(todoItemname);*/
+  alert(todoItemDate);
   addItem(todoItemname,todoItemDesc,'',todoItemDate,'');
 }
 
@@ -101,9 +101,7 @@ function submitItem(){
     } );
 } );
  */
-/**function addItemUIFunction(){
-  submitItem();
- */
+
 
 /**
  * Deletes and item in the Todo list
@@ -139,13 +137,14 @@ function updateItem(id, name, description, assignee, dueDate, props) {}
  * If there was only one item in the list then the string would become '<div>ID,Name,Description</div><div>01,todo1,first to do item </div>'.
  */
 function createItemTable(items) {
-  var list = '<table style="width:100%"><tr><th>ID</th><th>Name</th><th>Description</th><th>Duedate</th></tr>';
+  var list = '<table style="width:100%" position:absolute ><tr><th>ID</th><th>Name</th><th>Description</th><th>Duedate</th><th> How long left?</th></tr>';
   items.forEach(i => {
     element = '<div>'
     element += '<tr><td>' + i['ID'] + '. ' + '</td>';
-    element += '<td>' + i['Name'] + ', ' + '</td>';
+    element += '<td>' + i['Name'] + '</td>';
     element += '<td>' + i['Desc'] + '</td>';
     element += '<td>' + i['DueDate'] + '</td>';
+    element += '<td>' + i['dateTextboxID'] + '</td>';
     element += '</div>'
     list += element
   });

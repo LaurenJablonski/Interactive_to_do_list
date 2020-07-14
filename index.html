@@ -69,7 +69,7 @@
 
 <script>
   // Set the date we're counting down to
-  var countDownDate = new Date("Jul 6, 2020 22:30:30").getTime(); /** would need to set this to whichever date entered for each item by the user (so would need to make this the user input box on the other page (input id="todoItemDate") i think */
+  var countDownDate = new Date(document.getElementById("DueDate")).getTime(); /** would need to set this to whichever date entered for each item by the user (so would need to make this the user input box on the other page (input id="todoItemDate") i think */
 
 
   var x = setInterval(function() {
