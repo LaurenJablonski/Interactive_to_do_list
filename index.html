@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  </head>
+
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div>
+        <h1>TO-DO LIST  <img src="./nextjumplogo1.png"></img></h1>
+        </div>
+         <div id="list"></div>
+    </div>
+    <!-- (For trying to put the items in a table)
+        <table id="table1" class="display" style="width:80%">
+          <tr>
+            <th>Name</th>
+            <th>Desc</th>
+          </tr>
+
+        </table> -->
+
+
+
+
+          <div>
+        <form>
+          <input id="nameTextboxID" type="name" class="new task" placeholder=" Name of new task">
+          <input id="descriptionTextboxID" type="desc" class="new task" placeholder=" New task description">
+          <input id="dateTextboxID" type="date" class="new task" placeholder=" New tasks due date">
+            <button onclick= "addItemUIFunction()" >+</button>
+
+        </form>
+          </div>
+
+    <p id="countdown"></p>
+
+    <style>
+        p{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+
+    <script>
+        // Set the date we're counting down to
+        var countDownDate = new Date("Jul 6, 2020 22:30:30").getTime(); /** would need to set this to whichever date entered for each item by the user (so would need to make this the user input box on the other page (input id="todoItemDate") i think */
+
+
+        var x = setInterval(function() {
+
+                // Get today's date and time since this will be used to determine the time difference between now and the deadline
+                var now = new Date().getTime();
+
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+
+                // Time calculations for just days (thought having the seconds countdown would be a bit intense on a to-do list)
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24)); // Converts distance into days
+
+                if (days > 2) {
+                    // If the deadline is more than 2 days away then just show the number of days
+                    clearInterval(x);
+                    document.getElementById("countdown").innerHTML = days + " days until deadline"
+
+                }
+                else if (days >= 0 && days <= 2){
+                    // When the deadline is within 2 days away then display deadline approaching in orange
+                    clearInterval(x);
+                    document.getElementById("countdown").innerHTML = "<span style='color: orange;'>Deadline approaching!</span>";
+
+                }
+                else if (days < 0){
+                    // when the deadline is reached then it displays EXPIRED in red
+                    clearInterval(x);
+                    document.getElementById("countdown").innerHTML = "<span style='color: red;'>DEADLINE EXPIRED</span>";
+                }
+
+
+
+            }, 1000);
+    </script>
+
+        <style>
+          h1{
+          font-size:70px;
+          color:white;
+          font-weight: 900;
+          width: 100%;
+          background-color: #F16227;
+          display:inline-block;
+          padding-top:5rem;
+
+        }
+        body {
+          padding-top: 2rem;
+          color: black;
+          background-color: white;
+          text-align: center;
+          font-family: Arial, Helvetica, sans-serif;
+          font-size: 20px;
+
+        }
+          input{
+            color:black;
+          }
+          button{
+            color:white;
+            background-color: #F16227 ;
+            border-color: #F16227;
+          }
+          img{
+            display:inline-block;
+            margin-right: 100px;
+            margin-left: auto;
+            margin-top: 1px;
+            padding-top: 0.5rem;
+            padding-top: 0.5rem;
+            width:25%;
+            height: 80px;
+
+
+          }
+        </style>
+
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script><!-- this is loaded in for the table example but remove if don't use it -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="script.js"></script>
+      </body>
+    </html>
