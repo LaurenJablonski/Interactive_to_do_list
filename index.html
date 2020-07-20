@@ -52,7 +52,11 @@
 <p id="countdown"></p>
 
 
- "<script>alert(createItemTable(items['DueDate']));</script>"
+"<script>alert(createItemTable(items['DueDate']));</script>"
+"<script>alert(JSON.stringify(items[2]['DueDate']));</script>"
+
+
+
 <script>
   // Set the date we're counting down to
   var countDownDate = new Date(JSON.stringify(items[2]['DueDate'])).getTime(); /** would need to set this to whichever date entered for each item by the user (so would need to make this the user input box on the other page (input id="todoItemDate") i think */
