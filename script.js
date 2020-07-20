@@ -58,10 +58,10 @@ function getItems(callback) {
  * @param {string} dueDate Due Date of the item
  * @param {string} props Any other information you might want to include
  */
-function addItem(name, description, assignee, dueDate, props) {
+function addItem(name, description, assignee, dueDate, props, howLong) {
   var body = {'Name': name, 'Desc': description,
     'Assignee': assignee, 'DueDate': dueDate,
-    'Props': props};
+    'Props': props, 'HowLong': howLong};
   /** alert(body);*/
   makeRequest('POST', '/item', body, function(data) {/** It makes the request and if the request is successful then it executes getItems(). If no success then it tells you there's an error*/
   console.log('success');/** in order to add a new item you must make a POST request */
@@ -84,7 +84,7 @@ function submitItem(){
   let todoItemDesc = document.getElementById("descriptionTextboxID").value;
   let todoItemDate = document.getElementById("dateTextboxID").value;
   /**alert(todoItemDate);*/
-  addItem(todoItemname,todoItemDesc,'',todoItemDate,'');
+  addItem(todoItemname,todoItemDesc,'',todoItemDate,'','');
 }
 /**
  * Deletes and item in the Todo list
@@ -103,7 +103,7 @@ function deleteItem(id) {}
  * @param {string} dueDate Due Date of the item
  * @param {string} props Any other information you might want to include
  */
-function updateItem(id, name, description, assignee, dueDate, props) {}
+function updateItem(id, name, description, assignee, dueDate, props, howLong) {}
 
 /**
  * Adds an item list onto the page
