@@ -31,7 +31,7 @@ function makeRequest(method, resource, body, successCb, errorCb) {
     success: successCb,
     error: errorCb
   });
-  alert('');
+  /**alert('');*/
 }
 
 /**
@@ -128,7 +128,7 @@ function createItemTable(items) {
     element += '<td>' + i['Name'] + '</td>';
     element += '<td>' + i['Desc'] + '</td>';
     element += '<td>' + i['DueDate'] + '</td>';
-    element += '<td>' + i['dateTextboxID'] + '</td>';
+    element += '<td>' + i['HowLong'] + '</td>';
     element += '</div>'
     list += element
   });
@@ -136,6 +136,7 @@ function createItemTable(items) {
   $('#list').html(list);
 
 }
+
 
 /**
  * Refreshes the item list
@@ -150,3 +151,4 @@ function refreshList() {
 $().ready(function() { //* this function means that when the page has finished loading, it calls the refreshlist function, where this refreshlist function calls the getItems function with fucnction createItemTable as a function. (it's passing a function as an argument) */
   refreshList();
 });
+

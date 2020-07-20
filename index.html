@@ -34,20 +34,10 @@
 
 <div class="container">
   <div>
-    <h1>TO-DO LIST  <img src="./nextjumplogo1.png"></img></h1>
+    <h1> TO-DO LIST  <img src="./nextjumplogo1.png"></img></h1>
   </div>
   <div id="list"></div>
 </div>
-<!-- (For trying to put the items in a table)
-    <table id="table1" class="display" style="width:80%">
-      <tr>
-        <th>Name</th>
-        <th>Desc</th>
-      </tr>
-    </table> -->
-
-
-
 
 <div>
   <form>
@@ -61,17 +51,11 @@
 
 <p id="countdown"></p>
 
-<style>
-  p{
-    font-family: Arial, Helvetica, sans-serif;
-  }
-</style>
 
+ "<script>alert(createItemTable(items['DueDate']));</script>"
 <script>
   // Set the date we're counting down to
-  var countDownDate = new Date(JSON.stringify(items[2]['DueDate'])).getTime(); /** would need to set this to whichever date entered for each item by the user (so would need to make this the user input box on the other page (input id="todoItemDate") i think */
-
-
+  var countDownDate = new Date(createItemTable(items['DueDate'])).getTime(); /** would need to set this to whichever date entered for each item by the user (so would need to make this the user input box on the other page (input id="todoItemDate") i think */
 
   var x = setInterval(function() {
 
@@ -105,9 +89,15 @@
 
 
           }, 1000);
+
 </script>
 
 <style>
+
+  p{
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
   h1{
     font-size:70px;
     color:white;
