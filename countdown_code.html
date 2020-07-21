@@ -8,15 +8,21 @@
 <body>
 <p id="countdown"></p>
 
-<style>
-    p{
-        font-family: Arial, Helvetica, sans-serif;
-    }
-</style>
+<form>
+    <input id="nameTextboxID" type="name" class="new task" placeholder=" Name of new task">
+    <input id="descriptionTextboxID" type="desc" class="new desc" placeholder=" New task description">
+    <input id="dateTextboxID" type="date" class="new due date" placeholder=" New tasks due date">
+    <button onclick= "submitItem()" >+</button>
+
+</form>
+</div>
+<p id="countdown"></p>
 
 <script>
+
 // Set the date we're counting down to (think this is a global variable)
 var countDownDate = new Date("Jul 6, 2020 22:30:30").getTime(); /** would need to set this to whichever date entered for each item by the user (so would need to make this the user input box on the other page (input id="todoItemDate") i think */
+
 
 
 var x = setInterval(function() {

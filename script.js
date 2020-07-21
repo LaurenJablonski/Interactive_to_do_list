@@ -31,7 +31,7 @@ function makeRequest(method, resource, body, successCb, errorCb) {
     success: successCb,
     error: errorCb
   });
-  /**alert('');*/
+  alert('');
 }
 
 /**
@@ -57,6 +57,7 @@ function getItems(callback) {
  * @param {string} assignee Assignee of item
  * @param {string} dueDate Due Date of the item
  * @param {string} props Any other information you might want to include
+ * @param {string} howlong allows the user to easily see how much time they have left to complete the task
  */
 function addItem(name, description, assignee, dueDate, props, howLong) {
   var body = {'Name': name, 'Desc': description,
@@ -76,22 +77,35 @@ function addItem(name, description, assignee, dueDate, props, howLong) {
 
 /**
  This function fetches all the relevant items first(name, description etc) and then calls the addItem function. It gets the text from the textboxes
- and sends them to the addItems function and then sends the data to the API server. Note:.value gives you the property of the text inside the
+ and sends them to the addItem function and then sends the data to the API server. Note:.value gives you the property of the text inside the
  textbox.
  */
 function submitItem(){
   let todoItemname = document.getElementById("nameTextboxID").value;
   let todoItemDesc = document.getElementById("descriptionTextboxID").value;
-  let todoItemDate = document.getElementById("dateTextboxID").value;
-  /**alert(todoItemDate);*/
-  addItem(todoItemname,todoItemDesc,'',todoItemDate,'','');
+  let todoItemDate = document.getElementById("dateTextboxID").value
+
+  let dateToCountdownFrom = new Date(todoItemDate);
+  /**alert(todoItemDate);
+  alert(dateToCountdownFrom);*/
+  x;  /** when the + button is pressed then submitItem is executed which adds the items which needs to add the how long bit too so therefore must ensure that we call the variable x */
+  addItem(todoItemname,todoItemDesc,'',todoItemDate,'',dateToCountdownFrom);
+
+
 }
+
+
+
 /**
  * Deletes and item in the Todo list
  *
  * @param {int} id ID of item
  */
-function deleteItem(id) {}
+function deleteItem(id) {
+
+    document.getElementById('ID').remove();
+
+}
 
 /**
  * Updates an item in the Todo list
@@ -151,4 +165,42 @@ function refreshList() {
 $().ready(function() { //* this function means that when the page has finished loading, it calls the refreshlist function, where this refreshlist function calls the getItems function with fucnction createItemTable as a function. (it's passing a function as an argument) */
   refreshList();
 });
+
+
+var x = setInterval(function() {
+       // Set the date we're counting down to
+
+       var countDownDate = dateToCountdownFrom.getTime(); /** would need to set this to whichever date entered for each item by the user (so would need to make this the user input box on the other page (input id="todoItemDate") i think */
+        alert(dateToCountdownFrom)
+
+      // Get today's date and time since this will be used to determine the time difference between now and the deadline
+      var now = new Date().getTime();
+
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+
+      // Time calculations for just days (thought having the seconds countdown would be a bit intense on a to-do list)
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24)); // Converts distance into days and rounds
+
+      if (days > 2) {
+        // If the deadline is more than 2 days away then just show the number of days
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = days + " days until deadline"
+
+      }
+      else if (days >= 0 && days <= 2){
+        // When the deadline is within 2 days away then display deadline approaching in orange
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "<span style='color: orange;'>Deadline approaching!</span>";
+
+      }
+      else if (days < 0){
+        // when the deadline is reached then it displays EXPIRED in red
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "<span style='color: red;'>DEADLINE EXPIRED</span>";
+      }
+
+
+
+    }, 1000);
 
