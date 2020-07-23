@@ -92,40 +92,7 @@ function submitItem() {
 
     let dateToCountdownFrom = new Date(todoItemDate);
 
-    var countDownDate = dateToCountdownFrom.getTime();
-    /** would need to set this to whichever date entered for each item by the user (so would need to make this the user input box on the other page (input id="todoItemDate") i think */
 
-    var x = setInterval(function () {
-        // Set the date we're counting down to
-
-        // Get today's date and time since this will be used to determine the time difference between now and the deadline
-        var now = new Date().getTime();
-
-        // Find the distance between now and the count down date
-        var distance = countDownDate - now;
-
-
-        // Time calculations for just days (thought having the seconds countdown would be a bit intense on a to-do list)
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24)); // Converts distance into days and rounds
-
-        if (days > 2) {
-            // If the deadline is more than 2 days away then just show the number of days
-            clearInterval(x);
-            document.getElementById("countdown").innerHTML = days + " days until deadline"
-
-        } else if (days >= 0 && days <= 2) {
-            // When the deadline is within 2 days away then display deadline approaching in orange
-            clearInterval(x);
-            document.getElementById("countdown").innerHTML = "<span style='color: orange;'>Deadline approaching!</span>";
-
-        } else if (days < 0) {
-            // when the deadline is reached then it displays EXPIRED in red
-            clearInterval(x);
-            document.getElementById("countdown").innerHTML = "<span style='color: red;'>DEADLINE EXPIRED</span>";
-        }
-
-
-    }, 1000);
 
 
     /**alert(todoItemDate);
@@ -171,18 +138,55 @@ function updateItem(id, name, description, assignee, dueDate, props, howLong) {
  * If there was only one item in the list then the string would become '<div>ID,Name,Description</div><div>01,todo1,first to do item </div>'.
  */
 function createItemTable(items) {
-    alert(JSON.stringify(items[2]['countdown']));
+    alert(JSON.stringify(items[2]['DueDate']));
     var list = '<table style="width:100%" position:absolute ><tr><th>ID</th><th>Name</th><th>Description</th><th>Duedate</th><th> How long left?</th></tr>';
+    var countDownDate = dateToCountdownFrom.getTime();
+    alert('dateToCountdownFrom')
+    /** would need to set this to whichever date entered for each item by the user (so would need to make this the user input box on the other page (input id="todoItemDate") i think */
+
+    var x = setInterval(function () {
+        // Set the date we're counting down to
+
+        // Get today's date and time since this will be used to determine the time difference between now and the deadline
+        var now = new Date().getTime();
+
+        // Find the distance between now and the count down date
+        var distance = countDownDate - now;
+
+
+        // Time calculations for just days (thought having the seconds countdown would be a bit intense on a to-do list)
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24)); // Converts distance into days and rounds
+
+        if (days > 2) {
+            // If the deadline is more than 2 days away then just show the number of days
+            clearInterval(x);
+            document.getElementById('HowLong').innerHTML = days + " days until deadline"
+
+        } else if (days >= 0 && days <= 2) {
+            // When the deadline is within 2 days away then display deadline approaching in orange
+            clearInterval(x);
+            document.getElementById('HowLong').innerHTML = "<span style='color: orange;'>Deadline approaching!</span>";
+
+        } else if (days < 0) {
+            // when the deadline is reached then it displays EXPIRED in red
+            clearInterval(x);
+            document.getElementById('HowLong').innerHTML = "<span style='color: red;'>DEADLINE EXPIRED</span>";
+        }
+
+
+    }, 1000);
+
     items.forEach(i => {
         element = '<div>'
         element += '<tr><td>' + i['ID'] + '. ' + '</td>';
         element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + i['DueDate'] + '</td>';
-        element += '<td>' + i['countdown'] + '</td>';
+        element += '<td>' + i['HowLong'] + '</td>';
         element += '</div>'
         list += element
     });
+
     element += '</table>';
     $('#list').html(list);
 
