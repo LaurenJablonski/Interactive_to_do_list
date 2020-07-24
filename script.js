@@ -58,11 +58,11 @@ function getItems(callback) {
  * @param {string} props Any other information you might want to include
  * @param {string} howlong allows the user to easily see how much time they have left to complete the task
  */
-function addItem(name, description, assignee, dueDate, props, howLong) {
+function addItem(name, description, assignee, dueDate, props) {
     var body = {
         'Name': name, 'Desc': description,
         'Assignee': assignee, 'DueDate': dueDate,
-        'Props': props, 'HowLong': howLong};
+        'Props': props};
 
 
     /** alert(body);*/
@@ -91,7 +91,7 @@ function submitItem() {
     let todoItemDesc = document.getElementById("descriptionTextboxID").value;
     let todoItemDate = document.getElementById("dateTextboxID").value
 
-    let dateToCountdownFrom = new Date(todoItemDate);
+   /** let dateToCountdownFrom = new Date(todoItemDate);*/
 
 
 
@@ -99,7 +99,7 @@ function submitItem() {
     /**alert(todoItemDate);
      alert(dateToCountdownFrom);*/
     /** x;  when the + button is pressed then submitItem is executed which adds the items which needs to add the how long bit too so therefore must ensure that we call the variable x */
-    addItem(todoItemname, todoItemDesc, '', todoItemDate, '',dateToCountdownFrom );
+    addItem(todoItemname, todoItemDesc, '', todoItemDate, '');
 }
 
 
@@ -108,8 +108,8 @@ function submitItem() {
  *
  * @param {int} id ID of item
  */
-function deleteItem(id) {
-}
+function deleteItem(id) {}
+
 
 /**
  * Updates an item in the Todo list
@@ -121,7 +121,7 @@ function deleteItem(id) {
  * @param {string} dueDate Due Date of the item
  * @param {string} props Any other information you might want to include
  */
-function updateItem(id, name, description, assignee, dueDate, props, howLong) {
+function updateItem(id, name, description, assignee, dueDate, props) {
 }
 
 /**
@@ -130,7 +130,7 @@ function updateItem(id, name, description, assignee, dueDate, props, howLong) {
  *
  * @param {Array} items
  * We need this function to be able to append the item onto the page.
- * In this function we can see that this function takes each item (which is returned from the getItems() and creates HTML. So
+ * In this function we can see that this function takes each item (which is returned from the getItems()) and creates HTML. So
  * for each item from the API, the same piece of HTML is made with the data from the item object which is what the items.forEach
  *loop is doing. Basically the for loop is building a HTML element for each item so if there are 5 items in the todo list, it will loop
  * over each item once (creating 5 items) and adds it to the variable list which is a string. At the end, this string of HTML is inserted
@@ -140,50 +140,31 @@ function updateItem(id, name, description, assignee, dueDate, props, howLong) {
  */
 function createItemTable(items) {
     alert(JSON.stringify(items[2]['DueDate']));
-    var list = '<table style="width:100%" position:absolute ><tr><th>ID</th><th>Name</th><th>Description</th><th>Duedate</th><th> How long left?</th></tr>';
-    var countDownDate = dateToCountdownFrom.getTime();
-    alert('dateToCountdownFrom')
-    /** would need to set this to whichever date entered for each item by the user (so would need to make this the user input box on the other page (input id="todoItemDate") i think */
+    var list = '<table style="width:100%" position:absolute ><tr><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th></tr>';
 
-    var x = setInterval(function () {
-        // Set the date we're counting down to
-
-        // Get today's date and time since this will be used to determine the time difference between now and the deadline
-        var now = new Date().getTime();
-
-        // Find the distance between now and the count down date
-        var distance = countDownDate - now;
-
-
-        // Time calculations for just days (thought having the seconds countdown would be a bit intense on a to-do list)
-        var days = Math.floor(distance / (1000 * 60 * 60 * 24)); // Converts distance into days and rounds
-
-        if (days > 2) {
-            // If the deadline is more than 2 days away then just show the number of days
-            clearInterval(x);
-            document.getElementById('HowLong').innerHTML = days + " days until deadline"
-
-        } else if (days >= 0 && days <= 2) {
-            // When the deadline is within 2 days away then display deadline approaching in orange
-            clearInterval(x);
-            document.getElementById('HowLong').innerHTML = "<span style='color: orange;'>Deadline approaching!</span>";
-
-        } else if (days < 0) {
-            // when the deadline is reached then it displays EXPIRED in red
-            clearInterval(x);
-            document.getElementById('HowLong').innerHTML = "<span style='color: red;'>DEADLINE EXPIRED</span>";
-        }
-
-
-    }, 1000);
+    var now = new Date();
 
     items.forEach(i => {
+        var itemDueDate = new Date(i['DueDate']);
+        var distance = itemDueDate - now;
+        var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        var daysWithText = days;
+
+        if (days > 2){
+            daysWithText = days + " days left." ;
+        }else if (days >= 0 && days <= 2) {
+            daysWithText = "Deadline approaching!";
+
+        }else if (days < 0){
+            daysWithText = "DEADLINE EXPIRED";
+        }
+
         element = '<div>'
-        element += '<tr><td>' + i['ID'] + '. ' + '</td>';
-        element += '<td>' + i['Name'] + '</td>';
+        /**element += '<tr><td>' + i['ID'] + '. ' + '</td>';*/
+        element += '<tr><td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
-        element += '<td>' + i['DueDate'] + '</td>';
-        element += '<td>' + i['HowLong'] + '</td>';
+        console.log(i['DueDate']);
+        element += '<td>' + daysWithText + '</td>';
         element += '</div>'
         list += element
     });
