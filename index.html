@@ -44,7 +44,7 @@
     <input id="nameTextboxID" type="name" class="new task" placeholder=" Name of new task">
     <input id="descriptionTextboxID" type="desc" class="new desc" placeholder=" New task description">
     <input id="dateTextboxID" type="date" class="new due date" placeholder=" New tasks due date">
-    <button onclick= "submitItem()" >+</button>
+    <input type="button" id="button1" value="+" onclick="submitItem()"> <!-- if this breaks the code and it stops working that revert back to the prev version of it working -->
     <input type="button" id="button2" value="Clear list" onclick="removeAll()">
 
 
@@ -61,8 +61,6 @@
   p{
     font-family: Arial, Helvetica, sans-serif;
   }
-
-
 
   h1{
     font-size:70px;
@@ -88,7 +86,7 @@
   input{
     color:black;
   }
-  button{
+  #button1{
     color:white;
     background-color: #F16227 ;
     border-color: #F16227;

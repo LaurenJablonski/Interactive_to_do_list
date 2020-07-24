@@ -90,7 +90,15 @@ function submitItem() {
     let todoItemDesc = document.getElementById("descriptionTextboxID").value;
     let todoItemDate = document.getElementById("dateTextboxID").value
 
-    addItem(todoItemname, todoItemDesc, '', todoItemDate, '');
+    if (todoItemname == "" || todoItemname == null) {
+        alert("Please enter a task!");
+    } else{
+        addItem(todoItemname, todoItemDesc, '', todoItemDate, '');
+        alert("Item is being added to the page");
+
+    }
+
+
 }
 
 
@@ -104,6 +112,14 @@ function deleteItem(id) {
     $('input[type="button"]').click(function(e){
         $(this).closest('tr').remove()
     })
+
+}
+
+function deleteToDo(id){
+
+    list.removeChild(document.getElementsByTagName("li")[sel_id]);
+    var clicks = document.getElementsByTagName("input").length;
+    itemCountSpan.innerHTML = clicks;
 
 }
 
