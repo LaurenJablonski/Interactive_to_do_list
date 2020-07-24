@@ -64,6 +64,7 @@ function addItem(name, description, assignee, dueDate, props, howLong) {
         'Assignee': assignee, 'DueDate': dueDate,
         'Props': props, 'HowLong': howLong};
 
+
     /** alert(body);*/
     makeRequest('POST', '/item', body, function (data) {
         /** It makes the request and if the request is successful then it executes getItems(). If no success then it tells you there's an error*/
@@ -98,7 +99,7 @@ function submitItem() {
     /**alert(todoItemDate);
      alert(dateToCountdownFrom);*/
     /** x;  when the + button is pressed then submitItem is executed which adds the items which needs to add the how long bit too so therefore must ensure that we call the variable x */
-    addItem(todoItemname, todoItemDesc, '', todoItemDate, '', x);
+    addItem(todoItemname, todoItemDesc, '', todoItemDate, '',dateToCountdownFrom );
 }
 
 
