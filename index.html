@@ -45,6 +45,8 @@
     <input id="descriptionTextboxID" type="desc" class="new desc" placeholder=" New task description">
     <input id="dateTextboxID" type="date" class="new due date" placeholder=" New tasks due date">
     <button onclick= "submitItem()" >+</button>
+    <input type="button" id="button2" value="Clear list" onclick="removeAll()">
+
 
   </form>
 </div>
@@ -91,6 +93,17 @@
     background-color: #F16227 ;
     border-color: #F16227;
   }
+
+  #button2{
+    color:white;
+    background-color: #F16227 ;
+    border-color: #F16227;
+    position: absolute;
+    left: 90%;
+
+  }
+
+
   img{
     display:inline-block;
     margin-right: 100px;

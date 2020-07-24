@@ -85,22 +85,14 @@ function addItem(name, description, assignee, dueDate, props) {
  textbox.
  */
 function submitItem() {
-    alert("testing");
-    let todoItemname = document.getElementById("nameTextboxID").value;
 
+    let todoItemname = document.getElementById("nameTextboxID").value;
     let todoItemDesc = document.getElementById("descriptionTextboxID").value;
     let todoItemDate = document.getElementById("dateTextboxID").value
 
-   /** let dateToCountdownFrom = new Date(todoItemDate);*/
-
-
-
-
-    /**alert(todoItemDate);
-     alert(dateToCountdownFrom);*/
-    /** x;  when the + button is pressed then submitItem is executed which adds the items which needs to add the how long bit too so therefore must ensure that we call the variable x */
     addItem(todoItemname, todoItemDesc, '', todoItemDate, '');
 }
+
 
 
 /**
@@ -108,7 +100,12 @@ function submitItem() {
  *
  * @param {int} id ID of item
  */
-function deleteItem(id) {}
+function deleteItem(id) {
+    $('input[type="button"]').click(function(e){
+        $(this).closest('tr').remove()
+    })
+
+}
 
 
 /**
@@ -140,7 +137,7 @@ function updateItem(id, name, description, assignee, dueDate, props) {
  */
 function createItemTable(items) {
     alert(JSON.stringify(items[2]['DueDate']));
-    var list = '<table style="width:100%" position:absolute ><tr><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th></tr>';
+    var list = '<table style="width:100%" position:absolute ><tr><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th><th>DELETE BUTTON</th></tr>';
 
     var now = new Date();
 
@@ -163,14 +160,18 @@ function createItemTable(items) {
         /**element += '<tr><td>' + i['ID'] + '. ' + '</td>';*/
         element += '<tr><td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
-        console.log(i['DueDate']);
         element += '<td>' + daysWithText + '</td>';
         element += '</div>'
+
         list += element
     });
 
     element += '</table>';
+
     $('#list').html(list);
+    $('input[type="button"]').click(function(){
+        $(this).closest('tr').remove()
+    })
 
 }
 
@@ -188,6 +189,10 @@ function refreshList() {
 $().ready(function () { //* this function means that when the page has finished loading, it calls the refreshlist function, where this refreshlist function calls the getItems function with fucnction createItemTable as a function. (it's passing a function as an argument) */
     refreshList();
 });
+
+function removeAll(){
+    document.getElementById("list").innerHTML = "";
+}
 
 
 
