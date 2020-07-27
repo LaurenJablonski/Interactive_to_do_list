@@ -163,13 +163,19 @@ function createItemTable(items) {
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var daysWithText = days;
 
+
         if (days > 2){
             daysWithText = days + " days left." ;
+            daysWithText.style.color = "red";
+
         }else if (days >= 0 && days <= 2) {
             daysWithText = "Deadline approaching!";
 
+
         }else if (days < 0){
-            daysWithText = "DEADLINE EXPIRED";
+            <p style="color:#FF0000";> DEADLINE EXPIRED </p>
+            //daysWithText = "DEADLINE EXPIRED";
+
         }
 
         element = '<div>'
