@@ -153,7 +153,7 @@ function updateItem(id, name, description, assignee, dueDate, props) {
  */
 function createItemTable(items) {
     alert(JSON.stringify(items[2]['DueDate']));
-    var list = '<table style="width:100%" position:absolute ><tr><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th><th>DELETE BUTTON</th></tr>';
+    var list = '<table style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th></tr>';
 
     var now = new Date();
 
@@ -172,14 +172,14 @@ function createItemTable(items) {
             daysWithText = '<p style="color:orange;"> Deadline approaching </p>'
 
 
-        }else if (days < 0){
-            daysWithText = '<p style="color:red;"> DEADLINE EXPIRED </p>'
+        //}else if (days < 0){
+            //daysWithText = '<p style="color:red;"> DEADLINE EXPIRED </p>'
 
         }
 
         element = '<div>'
-        /**element += '<tr><td>' + i['ID'] + '. ' + '</td>';*/
-        element += '<tr><td>' + i['Name'] + '</td>';
+        element += '<tr><td>' + i['ID'] + '. ' + '</td>';
+        element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
         element += '</div>'
