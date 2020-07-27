@@ -166,15 +166,14 @@ function createItemTable(items) {
 
         if (days > 2){
             daysWithText = days + " days left." ;
-            daysWithText.style.color = "red";
+
 
         }else if (days >= 0 && days <= 2) {
-            daysWithText = "Deadline approaching!";
+            daysWithText = '<p style="color:orange;"> Deadline approaching </p>'
 
 
         }else if (days < 0){
-            <p style="color:#FF0000";> DEADLINE EXPIRED </p>
-            //daysWithText = "DEADLINE EXPIRED";
+            daysWithText = '<p style="color:red;"> DEADLINE EXPIRED </p>'
 
         }
 
