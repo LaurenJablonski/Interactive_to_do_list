@@ -94,10 +94,17 @@ function submitItem() {
 
     if (todoItemname == "" || todoItemname == null) {
         alert("Please enter a task!");
+    }
+    if (todoItemDesc == "" || todoItemDesc == null) {
+        alert("Please enter a description for the task!");
+    }
+    if (todoItemDate == "" || todoItemDate == null) {
+                alert("Please enter a due date for the task!");
+
     } else {
         addItem(todoItemname, todoItemDesc, '', todoItemDate, '');
         alert("Item is being added to the page");
-        $("#deletebutton").show();
+        //$("#deletebutton").show();
         //var deleteItem = document.getElementById("deletebutton");
         //deleteItem = deleteToDo(id);
         //alert(deleteItem);
@@ -162,7 +169,7 @@ function updateItem(id, name, description, assignee, dueDate, props) {
  */
 function createItemTable(items) {
     alert(JSON.stringify(items[2]['DueDate']));
-    var list = '<table style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th><th style="text-align:center">Delete</th></tr>';
+    var list = '<table style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th></tr>';
 
     var now = new Date();
 
@@ -171,8 +178,6 @@ function createItemTable(items) {
         var distance = itemDueDate - now;
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var daysWithText = days;
-
-
 
         if (days > 2){
             daysWithText = days + " days left." ;
@@ -193,8 +198,8 @@ function createItemTable(items) {
         element += '<td>' + daysWithText + '</td>';
         //var Delete = deleteToDo(i['ID'])
         //element += '<td>' + i['deletebutton'] + '</td>';
-        var Delete = document.getElementById("deletebutton")
-        element += '<td>' + Delete + '</td>';
+        //var Delete = document.getElementById("deletebutton")
+        //element += '<td>' + Delete + '</td>';
         //alert(Delete);
         element += '</div>'
         list += element
@@ -224,6 +229,10 @@ $().ready(function () { //* this function means that when the page has finished 
     refreshList();
 });
 
+/**
+ * This function removes all the items that are in the list.
+ *
+ */
 function removeAll(){
     document.getElementById("list").innerHTML = "";
 }
