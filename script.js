@@ -104,7 +104,7 @@ function submitItem() {
     } else {
         addItem(todoItemname, todoItemDesc, '', todoItemDate, '');
         alert("Item is being added to the page");
-        //$("#deletebutton").show();
+        $("#deletebutton").show();
         //var deleteItem = document.getElementById("deletebutton");
         //deleteItem = deleteToDo(id);
         //alert(deleteItem);
@@ -113,13 +113,22 @@ function submitItem() {
 
 function deleteToDo(id)
 {
-    for (var i = 0; i < this.element.length; i++) {
-        if (this.element[i].id === id) {
-            this.element.splice(i, 1);
+  for (var i = 0; i < this.element.length; i++) {
+    if (this.element[i].id === id) {
+      this.element.splice(i, 1);
             break;
         }
     }
 }
+
+//function deleteToDo(id){
+   // $(document).ready(function(){
+     //   $("button").click(function(){
+       //     $("form").remove();
+        //});
+
+
+
 
 
 
@@ -129,7 +138,8 @@ function deleteToDo(id)
  *
  * @param {int} id ID of item
  */
-function deleteItem(id) {
+function deleteItem() {
+    document.getElementById("toDoTable").deleteRow(0);
 
 }
 
@@ -169,7 +179,7 @@ function updateItem(id, name, description, assignee, dueDate, props) {
  */
 function createItemTable(items) {
     alert(JSON.stringify(items[2]['DueDate']));
-    var list = '<table style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th></tr>';
+    var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th></tr>';
 
     var now = new Date();
 
@@ -178,6 +188,8 @@ function createItemTable(items) {
         var distance = itemDueDate - now;
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var daysWithText = days;
+        var DELETE = document.getElementById("DELETEBUTTON");
+
 
         if (days > 2){
             daysWithText = days + " days left." ;
@@ -196,6 +208,8 @@ function createItemTable(items) {
         element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
+        element += '<td>' + DELETE + '</td>';
+
         //var Delete = deleteToDo(i['ID'])
         //element += '<td>' + i['deletebutton'] + '</td>';
         //var Delete = document.getElementById("deletebutton")
@@ -212,6 +226,11 @@ function createItemTable(items) {
         $(this).closest('tr').remove()
     })
 
+}
+
+function deleteRow(r) {
+    var i = r.parentNode.parentNode.rowIndex;
+    document.getElementById("toDoTable").deleteRow(i);
 }
 
 

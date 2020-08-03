@@ -45,18 +45,16 @@
     <input id="descriptionTextboxID" type="desc" class="new desc" placeholder=" New task description">
     <input id="dateTextboxID" type="date" class="new due date" placeholder=" New tasks due date">
     <input type="button" id="button1" value="+" onclick="submitItem()"> <!-- if this breaks the code and it stops working that revert back to the prev version of it working -->
-    <button type = "button" id="deletebutton" style = "display:none" onclick="deleteToDo(i['ID'])">DELETE</button>
     <input type="button" id="button2" value="Clear list" onclick="removeAll()">
+    <button type = "button" id="deletebutton" style = "display:none" onclick="deleteItem">DELETE</button>
 
+    <button onclick="deleteItem()">
+      Delete Row
+    </button>
   </form>
-
-
-
-
-
-
 </div>
 
+<input type="button" id="DELETEBUTTON" value="Delete" onclick="deleteRow(this)">
 
 
 
