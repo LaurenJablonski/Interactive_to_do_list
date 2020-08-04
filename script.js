@@ -143,16 +143,15 @@ function updateItem(id, name, description, assignee, dueDate, props) {
 }
 
 function addInput(type, value, id, onclick, parentId) {
-    //Create an input type dynamically.
-    var element = document.createElement("input");
-    element.type = type;
-    element.value = value;
-    element.id = id;
-    element.onclick = onclick;
+    var element1 = document.createElement("input");
+    element1.type = type;
+    element1.value = value;
+    element1.id = id;
+    element1.onclick = onclick;
 
     var parent = document.getElementById(parentId);
     //Append the element in page (in span).
-    parent.appendChild(element);
+    parent.appendChild(element1);
 }
 /**
  * Adds an item list onto the page
@@ -170,18 +169,18 @@ function addInput(type, value, id, onclick, parentId) {
  */
 function createItemTable(items) {
     alert(JSON.stringify(items[2]['DueDate']));
-    var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th></tr>';
+    var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th><th style="text-align:center">DELETE</th></tr>';
 
     var now = new Date();
 
     items.forEach(i => {
         var itemDueDate = new Date(i['DueDate']);
-        alert("the due dates are:" + i['Name'] );
         var distance = itemDueDate - now;
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var daysWithText = days;
         //var DELETE = deleteRow(i);
-        var DELETE = addInput('button', 'DELETE', i, deleteRow(i['ID']), 'toDoTable')
+        //var DELETE = addInput('button', 'DELETE', i, deleteRow(i['ID']), 'toDoTable')
+        //var DELETE = document.getElementById("deletebutton").innerHTML;
 
 
 
@@ -204,7 +203,7 @@ function createItemTable(items) {
         element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
-        element += '<td>' + 'DELETE' + '</td>';
+        element += '<td>' + '' + '</td>';
 
         element += '</div>'
         list += element
@@ -226,7 +225,7 @@ function createItemTable(items) {
 
 function deleteRow(r) {
     var i = r.parentNode.parentNode.rowIndex;
-    document.getElementById("toDoTable").deleteRow(i);
+    document.getElementById("toDoTable").deleteRow(i+1);
 }
 
 
