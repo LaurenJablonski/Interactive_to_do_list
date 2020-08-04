@@ -5,7 +5,7 @@
  * @returns {string}
  */
 function getToken() {
-    return 'lauren1';
+    return 'lauren2';
 }
 
 /**
@@ -130,20 +130,6 @@ function submitItem() {
  */
 
 /**
- * Deletes and item in the Todo list
- *
- * @param {int} id ID of item
- */
-function deleteItem() {
-    document.getElementById("toDoTable").deleteRow(0);
-
-}
-
-
-
-
-
-/**
  * Updates an item in the Todo list
  *
  * @param {int} id ID of item
@@ -156,6 +142,18 @@ function deleteItem() {
 function updateItem(id, name, description, assignee, dueDate, props) {
 }
 
+function addInput(type, value, id, onclick, parentId) {
+    //Create an input type dynamically.
+    var element = document.createElement("input");
+    element.type = type;
+    element.value = value;
+    element.id = id;
+    element.onclick = onclick;
+
+    var parent = document.getElementById(parentId);
+    //Append the element in page (in span).
+    parent.appendChild(element);
+}
 /**
  * Adds an item list onto the page
  * Requires a DOM element with id 'list' to be present
@@ -178,10 +176,13 @@ function createItemTable(items) {
 
     items.forEach(i => {
         var itemDueDate = new Date(i['DueDate']);
+        alert("the due dates are:" + i['Name'] );
         var distance = itemDueDate - now;
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var daysWithText = days;
-        //$(".DELETEEEE").append("<input type="button" id="DELETEBUTTON" value="Delete" onclick="deleteRow(this)">");
+        //var DELETE = deleteRow(i);
+        var DELETE = addInput('button', 'DELETE', i, deleteRow(i['ID']), 'toDoTable')
+
 
 
 
