@@ -179,7 +179,7 @@ function createItemTable(items) {
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var daysWithText = days;
         //var DELETE = deleteRow(i);
-        //var DELETE = addInput('button', 'DELETE', i, deleteRow(i['ID']), 'toDoTable')
+        var DELETE = addInput('button', 'DELETE', i, deleteRow(i['ID']), 'toDoTable')
         //var DELETE = document.getElementById("deletebutton").innerHTML;
 
 
@@ -203,7 +203,7 @@ function createItemTable(items) {
         element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
-        element += '<td>' + '' + '</td>';
+        element += '<td>' + DELETE + '</td>';
 
         element += '</div>'
         list += element
