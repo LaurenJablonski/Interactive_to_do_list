@@ -40,21 +40,20 @@
 </div>
 
 <div>
-  <form>
+  <form id="myForm">
     <input id="nameTextboxID" type="name" class="new task" placeholder=" Name of new task">
     <input id="descriptionTextboxID" type="desc" class="new desc" placeholder=" New task description">
     <input id="dateTextboxID" type="date" class="new due date" placeholder=" New tasks due date">
     <input type="button" id="button1" value="+" onclick="submitItem()"> <!-- if this breaks the code and it stops working that revert back to the prev version of it working -->
     <input type="button" id="button2" value="Clear list" onclick="removeAll()">
-    <button type = "button" id="deletebutton" style = "display:none" onclick="deleteItem">DELETE</button>
 
-    <button onclick="deleteItem()">
-      Delete Row
-    </button>
   </form>
 </div>
+<div id="DELETEEEE">
+  <input type="button" id="deletebutton" value="Delete" onclick="deleteRow(this)">
+</div>
 
-<input type="button" id="DELETEBUTTON" value="Delete" onclick="deleteRow(this)">
+
 
 
 
@@ -130,7 +129,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="script.js"></script>
-<!-- <script src="script1.js"></script> -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
 
 </body>
 </html>

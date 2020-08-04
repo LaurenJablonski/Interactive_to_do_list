@@ -104,14 +104,21 @@ function submitItem() {
     } else {
         addItem(todoItemname, todoItemDesc, '', todoItemDate, '');
         alert("Item is being added to the page");
-        $("#deletebutton").show();
+
+        $('#myForm')[0].reset();// this clears the form text boxes after the user has inputted
+        alert("registered reset");
+        refreshList();// this gets all the items from the API and actually displays them on the webpage, so after the items have been submitted to the webpage.
+        alert("registered refresh");
+
+
+        //$("#deletebutton").show();
         //var deleteItem = document.getElementById("deletebutton");
         //deleteItem = deleteToDo(id);
         //alert(deleteItem);
     }
 }
 
-function deleteToDo(id)
+/**function deleteToDo(id)
 {
   for (var i = 0; i < this.element.length; i++) {
     if (this.element[i].id === id) {
@@ -120,18 +127,7 @@ function deleteToDo(id)
         }
     }
 }
-
-//function deleteToDo(id){
-   // $(document).ready(function(){
-     //   $("button").click(function(){
-       //     $("form").remove();
-        //});
-
-
-
-
-
-
+ */
 
 /**
  * Deletes and item in the Todo list
@@ -145,9 +141,6 @@ function deleteItem() {
 
 
 
-function productDelete(ctl) {
-    $(ctl).parents("tr").remove();
-}
 
 
 /**
@@ -188,7 +181,9 @@ function createItemTable(items) {
         var distance = itemDueDate - now;
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var daysWithText = days;
-        var DELETE = document.getElementById("DELETEBUTTON");
+        //$(".DELETEEEE").append("<input type="button" id="DELETEBUTTON" value="Delete" onclick="deleteRow(this)">");
+
+
 
 
         if (days > 2){
@@ -208,13 +203,8 @@ function createItemTable(items) {
         element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
-        element += '<td>' + DELETE + '</td>';
+        element += '<td>' + 'DELETE' + '</td>';
 
-        //var Delete = deleteToDo(i['ID'])
-        //element += '<td>' + i['deletebutton'] + '</td>';
-        //var Delete = document.getElementById("deletebutton")
-        //element += '<td>' + Delete + '</td>';
-        //alert(Delete);
         element += '</div>'
         list += element
     });
@@ -227,6 +217,11 @@ function createItemTable(items) {
     })
 
 }
+
+/**
+ * This function deletes the items in the to do list
+ * @param r
+ */
 
 function deleteRow(r) {
     var i = r.parentNode.parentNode.rowIndex;
