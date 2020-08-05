@@ -88,7 +88,7 @@ function deleteItem(name, description, assignee, dueDate, props){
           getItems();
     }, function () {
     console.log("An error occured in deleteItem");
-    
+
 
 }  );
 }
@@ -183,7 +183,6 @@ function createItemTable(items) {
         var daysWithText = days;
         DeleteButton.onclick = deleteItem(i['Name'],i['Desc'],i['Assignee'],i['DueDate'],i['Props']);
 
-
         if (days > 2){
             daysWithText = days + " days left." ;
 
@@ -197,13 +196,12 @@ function createItemTable(items) {
 
         }
 
-
         element = '<div>'
         element += '<tr><td>' + i['ID'] + '. ' + '</td>';
         element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
-        element += '<td>' + DeleteButton.onclick  + '</td>';
+        element += '<td>' + DeleteButton  + '</td>';
 
         element += '</div>'
         list += element
