@@ -78,7 +78,20 @@ function addItem(name, description, assignee, dueDate, props) {
 
     });
 }
+function deleteItem(name, description, assignee, dueDate, props){
+    var body = {'Name': name, 'Desc': description,
+        'Assignee': assignee, 'DueDate': dueDate,
+        'Props': props};
 
+    makeRequest('DELETE','/item', body , function (data){
+          console.log('success');
+          getItems();
+    }, function () {
+    console.log("An error occured in deleteItem");
+    
+
+}  );
+}
 /**
  This function fetches all the relevant items first(name, description etc) and then calls the addItem function. It gets the text from the textboxes
  and sends them to the addItem function and then sends the data to the API server. Note:.value gives you the property of the text inside the
@@ -89,6 +102,7 @@ function submitItem() {
     let todoItemname = document.getElementById("nameTextboxID").value;
     let todoItemDesc = document.getElementById("descriptionTextboxID").value;
     let todoItemDate = document.getElementById("dateTextboxID").value;
+
 
 
 
@@ -110,24 +124,9 @@ function submitItem() {
         refreshList();// this gets all the items from the API and actually displays them on the webpage, so after the items have been submitted to the webpage.
         alert("registered refresh");
 
-
-        //$("#deletebutton").show();
-        //var deleteItem = document.getElementById("deletebutton");
-        //deleteItem = deleteToDo(id);
-        //alert(deleteItem);
     }
 }
 
-/**function deleteToDo(id)
-{
-  for (var i = 0; i < this.element.length; i++) {
-    if (this.element[i].id === id) {
-      this.element.splice(i, 1);
-            break;
-        }
-    }
-}
- */
 
 /**
  * Updates an item in the Todo list
@@ -141,7 +140,7 @@ function submitItem() {
  */
 function updateItem(id, name, description, assignee, dueDate, props) {
 }
-
+/**
 function addInput(type, value, id, onclick, parentId) {
     var element1 = document.createElement("input");
     element1.type = type;
@@ -153,6 +152,8 @@ function addInput(type, value, id, onclick, parentId) {
     //Append the element in page (in span).
     parent.appendChild(element1);
 }
+ */
+
 /**
  * Adds an item list onto the page
  * Requires a DOM element with id 'list' to be present
@@ -172,18 +173,15 @@ function createItemTable(items) {
     var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th><th style="text-align:center">DELETE</th></tr>';
 
     var now = new Date();
+    var DeleteButton = document.getElementById("deletebutton");
+
 
     items.forEach(i => {
         var itemDueDate = new Date(i['DueDate']);
         var distance = itemDueDate - now;
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var daysWithText = days;
-        //var DELETE = deleteRow(i);
-        var DELETE = addInput('button', 'DELETE', i, deleteRow(i['ID']), 'toDoTable')
-        //var DELETE = document.getElementById("deletebutton").innerHTML;
-
-
-
+        DeleteButton.onclick = deleteItem(i['Name'],i['Desc'],i['Assignee'],i['DueDate'],i['Props']);
 
 
         if (days > 2){
@@ -198,12 +196,14 @@ function createItemTable(items) {
             daysWithText = '<p style="color:red;"> DEADLINE EXPIRED </p>'
 
         }
+
+
         element = '<div>'
         element += '<tr><td>' + i['ID'] + '. ' + '</td>';
         element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
-        element += '<td>' + DELETE + '</td>';
+        element += '<td>' + DeleteButton.onclick  + '</td>';
 
         element += '</div>'
         list += element
@@ -212,22 +212,22 @@ function createItemTable(items) {
     element += '</table>';
 
     $('#list').html(list);
-    $('input[type="button"]').click(function(){
-        $(this).closest('tr').remove()
-    })
+    //$('input[type="button"]').click(function(){
+      //  $(this).closest('tr').remove()
+    }
 
-}
+
 
 /**
  * This function deletes the items in the to do list
  * @param r
  */
 
-function deleteRow(r) {
+/**function deleteRow(r) {
     var i = r.parentNode.parentNode.rowIndex;
     document.getElementById("toDoTable").deleteRow(i+1);
 }
-
+*/
 
 /**
  * Refreshes the item list
