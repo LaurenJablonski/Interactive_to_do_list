@@ -39,6 +39,9 @@
   <div id="list"></div>
 </div>
 
+
+
+
 <div>
   <form id="myForm">
     <input id="nameTextboxID" type="name" class="new task" placeholder=" Name of new task">
@@ -46,11 +49,26 @@
     <input id="dateTextboxID" type="date" class="new due date" placeholder=" New tasks due date">
     <input type="button" id="button1" value="+" onclick="submitItem()"> <!-- if this breaks the code and it stops working that revert back to the prev version of it working -->
     <input type="button" id="button2" value="Clear list" onclick="removeAll()">
+    <input type="button" id="buttonToDelete" value="Delete">
 
   </form>
 </div>
+<!--
+<?PHP
+function deleteItem{
+    $ch = curl_init('https://todoapi.nxj.io');
+curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    'Authorization: Bearer lauren1')
+);
 
-<input type="button" id="deletebutton" value="Delete">
+$result = curl_exec($ch);
+echo $result;
+}
+?>
+-->
+
+
 
 
 

@@ -30,7 +30,7 @@ function makeRequest(method, resource, body, successCb, errorCb) {
         success: successCb,
         error: errorCb
     });
-    alert('');
+    //alert('');
 }
 
 /**
@@ -92,6 +92,9 @@ function deleteItem(name, description, assignee, dueDate, props){
 
 }  );
 }
+
+
+
 /**
  This function fetches all the relevant items first(name, description etc) and then calls the addItem function. It gets the text from the textboxes
  and sends them to the addItem function and then sends the data to the API server. Note:.value gives you the property of the text inside the
@@ -102,8 +105,6 @@ function submitItem() {
     let todoItemname = document.getElementById("nameTextboxID").value;
     let todoItemDesc = document.getElementById("descriptionTextboxID").value;
     let todoItemDate = document.getElementById("dateTextboxID").value;
-
-
 
 
     if (todoItemname == "" || todoItemname == null) {
@@ -173,7 +174,7 @@ function createItemTable(items) {
     var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th><th style="text-align:center">DELETE</th></tr>';
 
     var now = new Date();
-    var DeleteButton = document.getElementById("deletebutton");
+    var DeleteButton = document.getElementById("buttonToDelete");
 
 
     items.forEach(i => {
@@ -182,14 +183,13 @@ function createItemTable(items) {
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var daysWithText = days;
         DeleteButton.onclick = deleteItem(i['Name'],i['Desc'],i['Assignee'],i['DueDate'],i['Props']);
+        document.body.appendChild(DeleteButton);
 
         if (days > 2){
             daysWithText = days + " days left." ;
 
-
         }else if (days >= 0 && days <= 2) {
-            daysWithText = '<p style="color:orange;"> Deadline approaching </p>'
-
+            daysWithText = '<p style="color:orange;"> Deadline approaching (less than 2 days left) </p>'
 
         }else if (days < 0){
             daysWithText = '<p style="color:red;"> DEADLINE EXPIRED </p>'
