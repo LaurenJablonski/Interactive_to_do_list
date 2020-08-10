@@ -78,20 +78,7 @@ function addItem(name, description, assignee, dueDate, props) {
 
     });
 }
-function deleteItem(name, description, assignee, dueDate, props){
-    var body = {'Name': name, 'Desc': description,
-        'Assignee': assignee, 'DueDate': dueDate,
-        'Props': props};
 
-    makeRequest('DELETE','/item', body , function (data){
-          console.log('success');
-          getItems();
-    }, function () {
-    console.log("An error occured in deleteItem");
-
-
-}  );
-}
 
 
 
@@ -114,7 +101,7 @@ function submitItem() {
         alert("Please enter a description for the task!");
     }
     if (todoItemDate == "" || todoItemDate == null) {
-                alert("Please enter a due date for the task!");
+        alert("Please enter a due date for the task!");
 
     } else {
         addItem(todoItemname, todoItemDesc, '', todoItemDate, '');
@@ -142,13 +129,12 @@ function submitItem() {
 function updateItem(id, name, description, assignee, dueDate, props) {
 }
 /**
-function addInput(type, value, id, onclick, parentId) {
+ function addInput(type, value, id, onclick, parentId) {
     var element1 = document.createElement("input");
     element1.type = type;
     element1.value = value;
     element1.id = id;
     element1.onclick = onclick;
-
     var parent = document.getElementById(parentId);
     //Append the element in page (in span).
     parent.appendChild(element1);
@@ -170,11 +156,11 @@ function addInput(type, value, id, onclick, parentId) {
  * If there was only one item in the list then the string would become '<div>ID,Name,Description</div><div>01,todo1,first to do item </div>'.
  */
 function createItemTable(items) {
-    alert(JSON.stringify(items[2]['DueDate']));
+    //alert(JSON.stringify(items[2]['DueDate']));
     var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th><th style="text-align:center">DELETE</th></tr>';
 
     var now = new Date();
-    var DeleteButton = document.getElementById("buttonToDelete");
+    //var DeleteButton = document.getElementById("buttonToDelete");
 
 
     items.forEach(i => {
@@ -182,8 +168,24 @@ function createItemTable(items) {
         var distance = itemDueDate - now;
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var daysWithText = days;
-        DeleteButton.onclick = deleteItem(i['Name'],i['Desc'],i['Assignee'],i['DueDate'],i['Props']);
-        document.body.appendChild(DeleteButton);
+        //DeleteButton.onclick = deleteItem(i['Name'],i['Desc'],i['Assignee'],i['DueDate'],i['Props']);
+        //document.body.appendChild(DeleteButton);
+
+        function deleteItem(name, description, assignee, dueDate, props){
+            console.log("deleteItem");
+            var body = {'Name': name, 'Desc': description,
+                'Assignee': assignee, 'DueDate': dueDate,
+                'Props': props};
+
+            makeRequest('DELETE','/item/'+ i['ID'], body , function (data){
+                console.log('success');
+                getItems();
+            }, function () {
+                console.log("An error occured in deleteItem");
+
+
+            }  );
+        }
 
         if (days > 2){
             daysWithText = days + " days left." ;
@@ -201,31 +203,38 @@ function createItemTable(items) {
         element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
-        element += '<td>' + DeleteButton  + '</td>';
+        element += '<td><input type="button" id="deleteButton" value="Delete" onclick="deleteItem(i[\'Name\'],i[\'Desc\'],i[\'Assignee\'],i[\'DueDate\'],i[\'Props\'])"></td>';
+        //element += '<td><input type="checkbox" id="myCheck" style=”color:green" onclick="tickFunction()"></td>';
 
         element += '</div>'
         list += element
     });
 
-    element += '</table>';
-
+    //element += '</table>';
+    $(this).element += '</table>'; // not sure why this works but just leaving it as element += would give an error saying element not defined
     $('#list').html(list);
+
+
     //$('input[type="button"]').click(function(){
-      //  $(this).closest('tr').remove()
-    }
-
-
-
-/**
- * This function deletes the items in the to do list
- * @param r
- */
-
-/**function deleteRow(r) {
-    var i = r.parentNode.parentNode.rowIndex;
-    document.getElementById("toDoTable").deleteRow(i+1);
+    //  $(this).closest('tr').remove()
 }
-*/
+
+function tickFunction() {
+    var checkBox = document.getElementById("myCheck");
+
+    if (checkBox.checked == true){
+
+        document.getElementById("check").style.backgroundColor = 'greenyellow';
+        document.getElementById("checkbox").style.backgroundColor = 'greenyellow';
+
+    } else {
+        checkBox.style.display = "none";
+
+    }
+}
+
+
+
 
 /**
  * Refreshes the item list

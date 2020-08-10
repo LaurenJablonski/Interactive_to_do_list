@@ -1,3 +1,5 @@
+/element += '<td><button type="button" id="deleteButton"  value="Delete" onclick="deleteItem()"><i class="fa fa-trash"></i></button></td>';
+
 alert("hello");
 
 var countDownDate = dateToCountdownFrom.getTime(); /** would need to set this to whichever date entered for each item by the user (so would need to make this the user input box on the other page (input id="todoItemDate") i think */
