@@ -128,18 +128,7 @@ function submitItem() {
  */
 function updateItem(id, name, description, assignee, dueDate, props) {
 }
-/**
- function addInput(type, value, id, onclick, parentId) {
-    var element1 = document.createElement("input");
-    element1.type = type;
-    element1.value = value;
-    element1.id = id;
-    element1.onclick = onclick;
-    var parent = document.getElementById(parentId);
-    //Append the element in page (in span).
-    parent.appendChild(element1);
-}
- */
+
 
 /**
  * Adds an item list onto the page
@@ -157,7 +146,7 @@ function updateItem(id, name, description, assignee, dueDate, props) {
  */
 function createItemTable(items) {
     //alert(JSON.stringify(items[2]['DueDate']));
-    var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th><th style="text-align:center">DELETE</th></tr>';
+    var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th><th style="text-align:center">DELETE</th><th style="text-align:center"></th></tr>';
 
     var now = new Date();
     //var DeleteButton = document.getElementById("buttonToDelete");
@@ -205,7 +194,7 @@ function createItemTable(items) {
         element += '<td>' + daysWithText + '</td>';
         //element += '<td><input type="button" id="deleteButton" value="Delete" onclick="deleteItem(i[\'Name\'],i[\'Desc\'],i[\'Assignee\'],i[\'DueDate\'],i[\'Props\'])"></td>';
         element += '<td><button type="button" id="deleteButton"  value="Delete" onclick="deleteItem(i[\'Name\'],i[\'Desc\'],i[\'Assignee\'],i[\'DueDate\'],i[\'Props\'])"><i class="fa fa-trash"></i></button></td>';
-        //element += '<td><input type="checkbox" id="myCheck" style=”color:green" onclick="tickFunction()"></td>';
+        element += '<td><input type="checkbox" id="myCheck" style=”color:green" onclick="tickFunction()"></td>';
 
         element += '</div>'
         list += element
@@ -225,14 +214,13 @@ function tickFunction() {
 
     if (checkBox.checked == true){
 
-        document.getElementById("check").style.backgroundColor = 'greenyellow';
+        document.getElementById("ID").style.backgroundColor = 'greenyellow';
         document.getElementById("checkbox").style.backgroundColor = 'greenyellow';
 
-    } else {
-        checkBox.style.display = "none";
+    }//this had an else statement on it but when you clicked on the tick button twice the button disaperead in this else statement and we don't want that here
 
     }
-}
+
 
 
 
