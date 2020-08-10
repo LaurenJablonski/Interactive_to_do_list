@@ -203,7 +203,8 @@ function createItemTable(items) {
         element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
-        element += '<td><input type="button" id="deleteButton" value="Delete" onclick="deleteItem(i[\'Name\'],i[\'Desc\'],i[\'Assignee\'],i[\'DueDate\'],i[\'Props\'])"></td>';
+        //element += '<td><input type="button" id="deleteButton" value="Delete" onclick="deleteItem(i[\'Name\'],i[\'Desc\'],i[\'Assignee\'],i[\'DueDate\'],i[\'Props\'])"></td>';
+        element += '<td><button type="button" id="deleteButton"  value="Delete" onclick="deleteItem(i[\'Name\'],i[\'Desc\'],i[\'Assignee\'],i[\'DueDate\'],i[\'Props\'])"><i class="fa fa-trash"></i></button></td>';
         //element += '<td><input type="checkbox" id="myCheck" style=”color:green" onclick="tickFunction()"></td>';
 
         element += '</div>'
