@@ -286,7 +286,6 @@ $().ready(function () { //* this function means that when the page has finished 
 
 /**
  * This function removes all the items that are in the list.
- *
  */
 function removeAll(){
     arrayOfItemIDs.forEach(id=>{

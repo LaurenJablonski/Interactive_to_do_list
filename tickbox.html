@@ -1,29 +1,25 @@
 <!DOCTYPE html>
 <html>
-<body>
+    <body>
 
+        <label id="check" for="myCheck">Checkbox:</label>
+        <input type="checkbox" id="myCheck" style=”color:red" onclick="tickFunction()">
 
+        <script>
+            function tickFunction() {
+                var checkBox = document.getElementById("myCheck");
 
-<label id="check" for="myCheck">Checkbox:</label>
-<input type="checkbox" id="myCheck"style=”color:red" onclick="tickFunction()">
+                if (checkBox.checked == true){
 
+                    document.getElementById("").style.backgroundColor = 'greenyellow';
+                    document.getElementById("checkbox").style.backgroundColor = 'greenyellow';
 
+                } else {
+                    checkBox.style.display = "none";
 
-<script>
-    function tickFunction() {
-        var checkBox = document.getElementById("myCheck");
+                }
+            }
+        </script>
 
-        if (checkBox.checked == true){
-
-            document.getElementById("").style.backgroundColor = 'greenyellow';
-            document.getElementById("checkbox").style.backgroundColor = 'greenyellow';
-
-        } else {
-            checkBox.style.display = "none";
-
-        }
-    }
-</script>
-
-      </body>
-              </html>
+    </body>
+</html>
