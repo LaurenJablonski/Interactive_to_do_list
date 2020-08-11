@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<form  name="myForm" id="todoForm">
+    <input id="todoInput" name="fname" required  >
+    <button type="button" onclick="myFunction()">OK</button>
+</form>
+<ol id ="todoList">
+</ol>
+<script>
+    function myFunction()
+    {
+
+        var item=document.getElementById("todoInput").value
+        var checkBox = document.createElement("input");
+        checkBox.type = "checkbox";
+        checkBox.id="checkbox"
+        checkBox.onchange=updateItem
+        var text=document.createTextNode(item)
+        var newItem=document.createElement("li")
+        newItem.className="addedClass"
+        newItem.appendChild(text)
+        if (item === "")
+        {
+            alert("please fill in the blanks");
+        }else
+        {
+            var crap=document.getElementById("todoList")
+            crap.appendChild(newItem)
+            var addhere=document.getElementById("todoList")
+            addhere.appendChild(checkBox);
+        }
+
+        function updateItem()
+        {
+            if (document.getElementById("checkbox").checked)
+            {
+                document.getElementById("todoList").style.textDecoration="line-through"
+            }
+        }
+
+    }
+</script>
+</html>

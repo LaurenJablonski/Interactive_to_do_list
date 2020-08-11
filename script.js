@@ -129,6 +129,21 @@ function submitItem() {
 function updateItem(id, name, description, assignee, dueDate, props) {
 }
 
+function deleteItem(name, description, assignee, dueDate, props){
+    console.log("deleteItem");
+    var body = {'Name': name, 'Desc': description,
+        'Assignee': assignee, 'DueDate': dueDate,
+        'Props': props};
+
+    makeRequest('DELETE','/item/'+ i['ID'], body , function (data){
+        console.log('success');
+        getItems();
+    }, function () {
+        console.log("An error occured in deleteItem");
+
+
+    }  );
+}
 
 /**
  * Adds an item list onto the page
@@ -146,7 +161,7 @@ function updateItem(id, name, description, assignee, dueDate, props) {
  */
 function createItemTable(items) {
     //alert(JSON.stringify(items[2]['DueDate']));
-    var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center">ID</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Duedate</th><th style="text-align:center">DELETE</th><th style="text-align:center"></th></tr>';
+    var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center"></th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Days remaining</th><th style="text-align:center">Delete</th></tr>';
 
     var now = new Date();
     //var DeleteButton = document.getElementById("buttonToDelete");
@@ -160,21 +175,7 @@ function createItemTable(items) {
         //DeleteButton.onclick = deleteItem(i['Name'],i['Desc'],i['Assignee'],i['DueDate'],i['Props']);
         //document.body.appendChild(DeleteButton);
 
-        function deleteItem(name, description, assignee, dueDate, props){
-            console.log("deleteItem");
-            var body = {'Name': name, 'Desc': description,
-                'Assignee': assignee, 'DueDate': dueDate,
-                'Props': props};
 
-            makeRequest('DELETE','/item/'+ i['ID'], body , function (data){
-                console.log('success');
-                getItems();
-            }, function () {
-                console.log("An error occured in deleteItem");
-
-
-            }  );
-        }
 
         if (days > 2){
             daysWithText = days + " days left." ;
@@ -187,14 +188,16 @@ function createItemTable(items) {
 
         }
 
+
         element = '<div>'
-        element += '<tr><td>' + i['ID'] + '. ' + '</td>';
+        //element += '<tr><td>' + i['ID'] + '. ' + '</td>';
+        element += '<tr><td><input type="checkbox" id="myCheck" class="strike_button" onclick="tickFunction()"></td>';
         element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
         //element += '<td><input type="button" id="deleteButton" value="Delete" onclick="deleteItem(i[\'Name\'],i[\'Desc\'],i[\'Assignee\'],i[\'DueDate\'],i[\'Props\'])"></td>';
         element += '<td><button type="button" id="deleteButton"  value="Delete" onclick="deleteItem(i[\'Name\'],i[\'Desc\'],i[\'Assignee\'],i[\'DueDate\'],i[\'Props\'])"><i class="fa fa-trash"></i></button></td>';
-        element += '<td><input type="checkbox" id="myCheck" style=”color:green" onclick="tickFunction()"></td>';
+
 
         element += '</div>'
         list += element
@@ -205,21 +208,55 @@ function createItemTable(items) {
     $('#list').html(list);
 
 
-    //$('input[type="button"]').click(function(){
-    //  $(this).closest('tr').remove()
+
 }
 
 function tickFunction() {
-    var checkBox = document.getElementById("myCheck");
+            $('.strike_button').change(function() {
+            if ( this.checked) {
+                $(this).parent().parent().addClass("strikeout");
+            } else {
+                $(this).parent().parent().removeClass("strikeout");
+            }
+        });
 
-    if (checkBox.checked == true){
 
-        document.getElementById("ID").style.backgroundColor = 'greenyellow';
-        document.getElementById("checkbox").style.backgroundColor = 'greenyellow';
-
-    }//this had an else statement on it but when you clicked on the tick button twice the button disaperead in this else statement and we don't want that here
+        document.getElementById("myForm").style.textDecoration="line-through";
+        //document.getElementById(i["ID"]).style.backgroundColor = 'greenyellow';
+        //document.getElementById("myCheck").style.backgroundColor = 'greenyellow';
 
     }
+
+
+
+
+/**function myFunction(){
+
+    var item = document.getElementById("descTextboxID","nameTextboxID","dateTextboxID").value
+    var checkBox = document.createElement("input");
+    checkBox.type = "checkbox";
+    checkBox.id="checkbox"
+    checkBox.onchange=updateItem()
+    var text=document.createTextNode(item)
+    var newItem=document.createElement("li")
+    newItem.className="addedClass"
+    newItem.appendChild(text)
+
+        var crap=document.getElementById("myForm")
+        crap.appendChild(newItem)
+        var addhere=document.getElementById("myForm")
+        addhere.appendChild(checkBox);
+
+    function updateItem()
+    {
+        if (document.getElementById("checkbox").checked)
+        {
+            document.getElementById("myForm").style.textDecoration="line-through"
+        }
+    }
+
+}
+ */
 
 
 
