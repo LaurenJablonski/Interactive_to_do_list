@@ -32,6 +32,83 @@ function makeRequest(method, resource, body, successCb, errorCb) {
     });
     //alert('');
 }
+let today = new Date();
+let currentMonth = today.getMonth();
+let currentYear = today.getFullYear();
+let selectYear = document.getElementById("year");
+let selectMonth = document.getElementById("month");
+
+let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+let monthAndYear = document.getElementById("monthAndYear");
+showCalendar(currentMonth, currentYear);
+
+
+function next() {
+    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
+    currentMonth = (currentMonth + 1) % 12;
+    showCalendar(currentMonth, currentYear);
+}
+
+function previous() {
+    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
+    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+    showCalendar(currentMonth, currentYear);
+}
+
+
+function showCalendar(month, year) {
+
+    let firstDay = (new Date(year, month)).getDay();
+    let daysInMonth = 32 - new Date(year, month, 32).getDate();
+
+    let tbl = document.getElementById("calendar-body"); // body of the calendar
+
+    // clearing all previous cells
+    tbl.innerHTML = "";
+
+    // filing data about month and in the page via DOM.
+    monthAndYear.innerHTML = months[month] + " " + year;
+    selectYear.value = year;
+    selectMonth.value = month;
+
+    // creating all cells
+    let date = 1;
+    for (let i = 0; i < 6; i++) {
+        // creates a table row
+        let row = document.createElement("tr");
+
+        //creating individual cells, filing them up with data.
+        for (let j = 0; j < 7; j++) {
+            if (i === 0 && j < firstDay) {
+                let cell = document.createElement("td");
+                let cellText = document.createTextNode("");
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+            }
+            else if (date > daysInMonth) {
+                break;
+            }
+
+            else {
+                let cell = document.createElement("td");
+                let cellText = document.createTextNode(date);
+                if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
+                    cell.classList.add("bg-info");
+                } // color today's date
+                cell.appendChild(cellText);
+                row.appendChild(cell);
+                date++;
+            }
+
+
+        }
+
+        tbl.appendChild(row); // appending each row into calendar body.
+    }
+
+}
+
 
 /**
  * Gets items from Todo list API (makes a GET request)
@@ -206,11 +283,11 @@ function createItemTable(items) {
     //element += '</table>';
     $(this).element += '</table>'; // not sure why this works but just leaving it as element += would give an error saying element not defined
     $('#list').html(list);
-
-
-
 }
 
+/**
+ * This function allows you to tick a button when you have completed a task whilst simultaneously crossing out that element in the table
+ */
 function tickFunction() {
             $('.strike_button').change(function() {
             if ( this.checked) {
@@ -219,48 +296,7 @@ function tickFunction() {
                 $(this).parent().parent().removeClass("strikeout");
             }
         });
-
-
-        document.getElementById("myForm").style.textDecoration="line-through";
-        //document.getElementById(i["ID"]).style.backgroundColor = 'greenyellow';
-        //document.getElementById("myCheck").style.backgroundColor = 'greenyellow';
-
-    }
-
-
-
-
-/**function myFunction(){
-
-    var item = document.getElementById("descTextboxID","nameTextboxID","dateTextboxID").value
-    var checkBox = document.createElement("input");
-    checkBox.type = "checkbox";
-    checkBox.id="checkbox"
-    checkBox.onchange=updateItem()
-    var text=document.createTextNode(item)
-    var newItem=document.createElement("li")
-    newItem.className="addedClass"
-    newItem.appendChild(text)
-
-        var crap=document.getElementById("myForm")
-        crap.appendChild(newItem)
-        var addhere=document.getElementById("myForm")
-        addhere.appendChild(checkBox);
-
-    function updateItem()
-    {
-        if (document.getElementById("checkbox").checked)
-        {
-            document.getElementById("myForm").style.textDecoration="line-through"
-        }
-    }
-
 }
- */
-
-
-
-
 
 /**
  * Refreshes the item list
