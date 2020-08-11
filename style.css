@@ -1,0 +1,116 @@
+table {
+    border-collapse: collapse;
+}
+
+td {
+    position: relative;
+    padding: 5px 10px;
+}
+
+tr.strikeout td:before {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    border-bottom: 1px solid #111;
+    width: 100%;
+}
+
+
+#strike_button: checked{
+    background-color: green;
+}
+
+
+p{
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1{
+    font-size:70px;
+    color:white;
+    font-weight: 900;
+    width: 100%;
+    background-color: #F16227;
+    display:inline-block;
+    padding-top:5rem;
+
+}
+#deleteButton{
+    background-color: white;
+    border: black;
+    color: black;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+#mycheck{
+    color:green;
+}
+
+
+
+body {
+    padding-top: 2rem;
+    color: black;
+    background-color: white;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+
+}
+
+
+
+input{
+    color:black;
+}
+#button1{
+    color:white;
+    background-color: #F16227 ;
+    border-color: #F16227;
+}
+
+#button2{
+    color:white;
+    background-color: #F16227 ;
+    border-color: #F16227;
+    position: absolute;
+    left: 90%;
+
+}
+img{
+    display:inline-block;
+    margin-right: 100px;
+    margin-left: auto;
+    margin-top: 1px;
+    padding-top: 0.5rem;
+    padding-top: 0.5rem;
+    width:25%;
+    height: 80px;
+
+
+}
+.calender{
+    margin: auto;
+    width: 40%;
+    padding: 10px;
+}
+
+#next{
+    left:220%;
+}
+
+#previous{
+    text-align: center;
+
+}
+
+#month{
+    left:450%;
+    top:5%
+}
+
+
+
+

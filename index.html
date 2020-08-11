@@ -6,6 +6,7 @@
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -39,17 +40,17 @@
   <div class="calender">
   <div class="container col-sm-4 col-md-7 col-lg-4 mt-5">
   <div class="card">
-    <h3 class="card-header" id="monthAndYear" ></h3>
+    <h3 class="card-header" id="monthAndYear"></h3>
     <table class="table table-bordered table-responsive-sm" id="calendar">
       <thead>
       <tr id="calendertable">
-        <th>Sun</th>
-        <th>Mon</th>
-        <th>Tue</th>
-        <th>Wed</th>
-        <th>Thu</th>
-        <th>Fri</th>
-        <th>Sat</th>
+        <th style="background-color: #F16227">Sun</th>
+        <th style="background-color: #F16227">Mon</th>
+        <th style="background-color: #F16227">Tue</th>
+        <th style="background-color: #F16227">Wed</th>
+        <th style="background-color: #F16227">Thu</th>
+        <th style="background-color: #F16227">Fri</th>
+        <th style="background-color: #F16227">Sat</th>
       </tr>
       </thead>
 
@@ -57,6 +58,33 @@
 
       </tbody>
     </table>
+    <div id="moveBoxes" style="left: 80%">
+      <form class="form-inline" style="left: 80%">
+        <!--<label class="lead mr-2 ml-2" for="month">Jump To: </label>-->
+        <select class="form-control col-sm-4" name="month" id="month" onchange="jump()">
+          <option value=0>Jan</option>
+          <option value=1>Feb</option>
+          <option value=2>Mar</option>
+          <option value=3>Apr</option>
+          <option value=4>May</option>
+          <option value=5>Jun</option>
+          <option value=6>Jul</option>
+          <option value=7>Aug</option>
+          <option value=8>Sep</option>
+          <option value=9>Oct</option>
+          <option value=10>Nov</option>
+          <option value=11>Dec</option>
+        </select>
+
+
+        <label for="year"></label><select class="form-control col-sm-4" name="year" id="year" onchange="jump()" style="left: 450%">
+
+        <option value=2020>2020</option>
+        <option value=2021>2021</option>
+
+      </select></form>
+    </div>
+  </div>
 
     <div class="form-inline">
 
@@ -65,43 +93,12 @@
 
     <br/>
 
-    <form class="form-inline" >
-      <!--<label class="lead mr-2 ml-2" for="month">Jump To: </label>-->
-      <select class="form-control col-sm-4" name="month" id="month" onchange="jump()">
-        <option value=0>Jan</option>
-        <option value=1>Feb</option>
-        <option value=2>Mar</option>
-        <option value=3>Apr</option>
-        <option value=4>May</option>
-        <option value=5>Jun</option>
-        <option value=6>Jul</option>
-        <option value=7>Aug</option>
-        <option value=8>Sep</option>
-        <option value=9>Oct</option>
-        <option value=10>Nov</option>
-        <option value=11>Dec</option>
-      </select>
 
-
-      <label for="year"></label><select class="form-control col-sm-4" name="year" id="year" onchange="jump()">
-
-      <option value=2020>2020</option>
-      <option value=2021>2021</option>
-
-    </select></form>
-    </div>
   </div>
 </div>
   </div>
   <div id="list"></div>
 </div>
-
-
-
-
-
-
-
 
 <div>
   <form id="myForm">
@@ -110,141 +107,11 @@
     <input id="dateTextboxID" type="date" class="new due date" placeholder=" New tasks due date">
     <input type="button" id="button1" value="+" onclick="submitItem()"> <!-- if this breaks the code and it stops working that revert back to the prev version of it working -->
     <input type="button" id="button2" value="Clear list" onclick="removeAll()">
-    <!--<input type="button" id="buttonToDelete" value="Delete">-->
 
   </form>
   <ol id ="todoList">
   </ol>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-<style>
-
-  table {
-    border-collapse: collapse;
-  }
-
-  td {
-    position: relative;
-    padding: 5px 10px;
-  }
-
-  tr.strikeout td:before {
-    content: " ";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    border-bottom: 1px solid #111;
-    width: 100%;
-  }
-
-
-  #strike_button: checked{
-    background-color: green;
-  }
-
-
-  p{
-    font-family: Arial, Helvetica, sans-serif;
-  }
-
-  h1{
-    font-size:70px;
-    color:white;
-    font-weight: 900;
-    width: 100%;
-    background-color: #F16227;
-    display:inline-block;
-    padding-top:5rem;
-
-  }
-  #deleteButton{
-     background-color: white;
-     border: black;
-     color: black;
-     padding: 12px 16px;
-     font-size: 16px;
-     cursor: pointer;
-   }
-  #mycheck{
-    color:green;
-  }
-
-
-
-  body {
-    padding-top: 2rem;
-    color: black;
-    background-color: white;
-    text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
-
-  }
-
-
-
-  input{
-    color:black;
-  }
-  #button1{
-    color:white;
-    background-color: #F16227 ;
-    border-color: #F16227;
-  }
-
-  #button2{
-    color:white;
-    background-color: #F16227 ;
-    border-color: #F16227;
-    position: absolute;
-    left: 90%;
-
-  }
-  img{
-    display:inline-block;
-    margin-right: 100px;
-    margin-left: auto;
-    margin-top: 1px;
-    padding-top: 0.5rem;
-    padding-top: 0.5rem;
-    width:25%;
-    height: 80px;
-
-
-  }
-  .calender{
-    margin: auto;
-    width: 40%;
-    padding: 10px;
-  }
-
-  #next{
-    left:220%;
-  }
-
-  #previous{
-    text-align: center;
-
-  }
-
-
-
-
-
-</style>
-
-
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
