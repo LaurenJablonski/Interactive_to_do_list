@@ -42,7 +42,7 @@
     <h3 class="card-header" id="monthAndYear" ></h3>
     <table class="table table-bordered table-responsive-sm" id="calendar">
       <thead>
-      <tr>
+      <tr id="calendertable">
         <th>Sun</th>
         <th>Mon</th>
         <th>Tue</th>
@@ -62,7 +62,7 @@
 
       <button class="btn btn-outline-primary col-sm-6" id="previous" onclick="previous()">Prev</button>
       <button class="btn btn-outline-primary col-sm-6" id="next" onclick="next()">Next</button>
-    </div>
+
     <br/>
 
     <form class="form-inline" >
@@ -89,6 +89,7 @@
       <option value=2021>2021</option>
 
     </select></form>
+    </div>
   </div>
 </div>
   </div>
@@ -209,10 +210,6 @@
     left: 90%;
 
   }
-
-
-
-
   img{
     display:inline-block;
     margin-right: 100px;

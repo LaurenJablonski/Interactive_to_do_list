@@ -1,4 +1,12 @@
 /**
+ * Global list of item IDs in to-do list
+ */
+var arrayOfItemIDs = []
+
+
+
+
+/**
  * Gets a token to be used in API calls
  * This token references your personal database instance, should be kept consitent throughout the exercise
  *
@@ -8,30 +16,6 @@ function getToken() {
     return 'lauren2';
 }
 
-/**
- * Makes an HTTP request to the Todo list API
- * You shouldn't need to modify this - but feel free to do so!
- *
- * @param {string} method HTTP method/verb to be used
- * @param {string} resource Resource to be acted upon on the server, e.g. '/item' or '/item/3'(latter means to get the third item in the todo list)
- * @param {Object} body Request body (if needed)
- * @param {function} successCb On success callback
- * @param {function} errorCb On error callback
- */
-function makeRequest(method, resource, body, successCb, errorCb) {
-    var baseUrl = 'https://todoapi.nxj.io';
-    console.log(JSON.stringify(body));
-    /** alert(method+resource+JSON.stringify(body));*/
-    $.ajax({
-        method: method,
-        url: baseUrl + resource,
-        headers: {'token': getToken()},
-        data: body ? JSON.stringify(body) : null,
-        success: successCb,
-        error: errorCb
-    });
-    //alert('');
-}
 let today = new Date();
 let currentMonth = today.getMonth();
 let currentYear = today.getFullYear();
@@ -61,7 +45,6 @@ function showCalendar(month, year) {
 
     let firstDay = (new Date(year, month)).getDay();
     let daysInMonth = 32 - new Date(year, month, 32).getDate();
-
     let tbl = document.getElementById("calendar-body"); // body of the calendar
 
     // clearing all previous cells
@@ -100,8 +83,6 @@ function showCalendar(month, year) {
                 row.appendChild(cell);
                 date++;
             }
-
-
         }
 
         tbl.appendChild(row); // appending each row into calendar body.
@@ -109,6 +90,30 @@ function showCalendar(month, year) {
 
 }
 
+/**
+ * Makes an HTTP request to the Todo list API
+ * You shouldn't need to modify this - but feel free to do so!
+ *
+ * @param {string} method HTTP method/verb to be used
+ * @param {string} resource Resource to be acted upon on the server, e.g. '/item' or '/item/3'(latter means to get the third item in the todo list)
+ * @param {Object} body Request body (if needed)
+ * @param {function} successCb On success callback
+ * @param {function} errorCb On error callback
+ */
+function makeRequest(method, resource, body, successCb, errorCb) {
+    var baseUrl = 'https://todoapi.nxj.io';
+    console.log(JSON.stringify(body));
+    /** alert(method+resource+JSON.stringify(body));*/
+    $.ajax({
+        method: method,
+        url: baseUrl + resource,
+        headers: {'token': getToken()},
+        data: body ? JSON.stringify(body) : null,
+        success: successCb,
+        error: errorCb
+    });
+
+}
 
 /**
  * Gets items from Todo list API (makes a GET request)
@@ -141,12 +146,10 @@ function addItem(name, description, assignee, dueDate, props) {
         'Assignee': assignee, 'DueDate': dueDate,
         'Props': props};
 
-
-    /** alert(body);*/
     makeRequest('POST', '/item', body, function (data) {
         /** It makes the request and if the request is successful then it executes getItems(). If no success then it tells you there's an error*/
         console.log('success');/** in order to add a new item you must make a POST request */
-        /**alert('success');*/
+
         getItems();
 
     }, function () {
@@ -182,16 +185,14 @@ function submitItem() {
 
     } else {
         addItem(todoItemname, todoItemDesc, '', todoItemDate, '');
-        alert("Item is being added to the page");
-
-        $('#myForm')[0].reset();// this clears the form text boxes after the user has inputted
-        alert("registered reset");
-        refreshList();// this gets all the items from the API and actually displays them on the webpage, so after the items have been submitted to the webpage.
-        alert("registered refresh");
+        clearAndRefresh();
 
     }
 }
-
+function clearAndRefresh(){
+    $('#myForm')[0].reset();// this clears the form text boxes after the user has inputted
+    refreshList();// this gets all the items from the API and actually displays them on the webpage, so after the items have been submitted to the webpage.
+}
 
 /**
  * Updates an item in the Todo list
@@ -205,22 +206,19 @@ function submitItem() {
  */
 function updateItem(id, name, description, assignee, dueDate, props) {
 }
-
-function deleteItem(name, description, assignee, dueDate, props){
-    console.log("deleteItem");
-    var body = {'Name': name, 'Desc': description,
-        'Assignee': assignee, 'DueDate': dueDate,
-        'Props': props};
-
-    makeRequest('DELETE','/item/'+ i['ID'], body , function (data){
-        console.log('success');
+function deleteItem(id){
+    makeRequest('DELETE','/item/'+ id, null, function (data){
+        clearAndRefresh();
         getItems();
     }, function () {
         console.log("An error occured in deleteItem");
 
 
-    }  );
+    });
 }
+
+
+
 
 /**
  * Adds an item list onto the page
@@ -241,18 +239,13 @@ function createItemTable(items) {
     var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center"></th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Days remaining</th><th style="text-align:center">Delete</th></tr>';
 
     var now = new Date();
-    //var DeleteButton = document.getElementById("buttonToDelete");
-
 
     items.forEach(i => {
+        arrayOfItemIDs.push(i.ID)
         var itemDueDate = new Date(i['DueDate']);
         var distance = itemDueDate - now;
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));
         var daysWithText = days;
-        //DeleteButton.onclick = deleteItem(i['Name'],i['Desc'],i['Assignee'],i['DueDate'],i['Props']);
-        //document.body.appendChild(DeleteButton);
-
-
 
         if (days > 2){
             daysWithText = days + " days left." ;
@@ -266,22 +259,20 @@ function createItemTable(items) {
         }
 
 
+
         element = '<div>'
         //element += '<tr><td>' + i['ID'] + '. ' + '</td>';
         element += '<tr><td><input type="checkbox" id="myCheck" class="strike_button" onclick="tickFunction()"></td>';
         element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
-        //element += '<td><input type="button" id="deleteButton" value="Delete" onclick="deleteItem(i[\'Name\'],i[\'Desc\'],i[\'Assignee\'],i[\'DueDate\'],i[\'Props\'])"></td>';
-        element += '<td><button type="button" id="deleteButton"  value="Delete" onclick="deleteItem(i[\'Name\'],i[\'Desc\'],i[\'Assignee\'],i[\'DueDate\'],i[\'Props\'])"><i class="fa fa-trash"></i></button></td>';
-
-
+        element += '<td><button type="button" id="deleteButton"  value="Delete" onclick="deleteItem(' + i.ID + ')"><i class="fa fa-trash"></i></button></td>';
         element += '</div>'
         list += element
     });
 
-    //element += '</table>';
-    $(this).element += '</table>'; // not sure why this works but just leaving it as element += would give an error saying element not defined
+
+    $(this).element += '</table>';
     $('#list').html(list);
 }
 
@@ -289,13 +280,13 @@ function createItemTable(items) {
  * This function allows you to tick a button when you have completed a task whilst simultaneously crossing out that element in the table
  */
 function tickFunction() {
-            $('.strike_button').change(function() {
-            if ( this.checked) {
-                $(this).parent().parent().addClass("strikeout");
-            } else {
-                $(this).parent().parent().removeClass("strikeout");
-            }
-        });
+    $('.strike_button').change(function() {
+        if ( this.checked) {
+            $(this).parent().parent().addClass("strikeout");
+        } else {
+            $(this).parent().parent().removeClass("strikeout");
+        }
+    });
 }
 
 /**
@@ -317,8 +308,11 @@ $().ready(function () { //* this function means that when the page has finished 
  *
  */
 function removeAll(){
-    document.getElementById("list").innerHTML = "";
+    arrayOfItemIDs.forEach(id=>{
+        deleteItem(id)
+    })
 }
+
 
 
 
