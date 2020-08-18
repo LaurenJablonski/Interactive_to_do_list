@@ -3,9 +3,6 @@
  */
 var arrayOfItemIDs = []
 
-
-
-
 /**
  * Gets a token to be used in API calls
  * This token references your personal database instance, should be kept consitent throughout the exercise
@@ -40,6 +37,11 @@ function previous() {
     showCalendar(currentMonth, currentYear);
 }
 
+function jump() {
+    currentYear = parseInt(selectYear.value);
+    currentMonth = parseInt(selectMonth.value);
+    showCalendar(currentMonth, currentYear);
+}
 
 function showCalendar(month, year) {
 
@@ -236,7 +238,7 @@ function deleteItem(id){
  */
 function createItemTable(items) {
     //alert(JSON.stringify(items[2]['DueDate']));
-    var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center"></th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Days remaining</th><th style="text-align:center">Delete</th></tr>';
+    var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center">Tick</th><th style="text-align:center">Cross out</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Days remaining</th><th style="text-align:center">Delete</th></tr>';
 
     var now = new Date();
 
@@ -262,7 +264,9 @@ function createItemTable(items) {
 
         element = '<div>'
         //element += '<tr><td>' + i['ID'] + '. ' + '</td>';
-        element += '<tr><td><input type="checkbox" id="myCheck" class="strike_button" onclick="tickFunction()"></td>';
+
+        element += '<tr><td><input type="checkbox" id="myCheck" class="tick_button" onclick="tickFunction()" ></td>';
+        element += '<td><input type="checkbox" id="myCross" class="strike_button" onclick="strikeFunction()" ></td>';
         element += '<td>' + i['Name'] + '</td>';
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
@@ -276,18 +280,27 @@ function createItemTable(items) {
     $('#list').html(list);
 }
 
+
 /**
  * This function allows you to tick a button when you have completed a task whilst simultaneously crossing out that element in the table
  */
-function tickFunction() {
+function strikeFunction() {
     $('.strike_button').change(function() {
-        if ( this.checked) {
+        if (this.checked) {
             $(this).parent().parent().addClass("strikeout");
-        } else {
+        }
+        else {
             $(this).parent().parent().removeClass("strikeout");
         }
     });
 }
+function tickFunction(){
+    var checkBox = document.getElementById("myCheck");
+    if (checkBox.checked == true){
+    }
+    }
+
+
 
 /**
  * Refreshes the item list
