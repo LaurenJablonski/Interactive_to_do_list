@@ -22,28 +22,9 @@ let selectMonth = document.getElementById("month");
 let months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 let monthAndYear = document.getElementById("monthAndYear");
-showCalendar(currentMonth, currentYear);
+//showCalendar(currentMonth, currentYear,'');
 
-
-function next() {
-    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;
-    currentMonth = (currentMonth + 1) % 12;
-    showCalendar(currentMonth, currentYear);
-}
-
-function previous() {
-    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
-    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
-    showCalendar(currentMonth, currentYear);
-}
-
-function jump() {
-    currentYear = parseInt(selectYear.value);
-    currentMonth = parseInt(selectMonth.value);
-    showCalendar(currentMonth, currentYear);
-}
-
-function showCalendar(month, year) {
+function showCalendar(month, year,items) {
 
     let firstDay = (new Date(year, month)).getDay();
     let daysInMonth = 32 - new Date(year, month, 32).getDate();
@@ -59,16 +40,16 @@ function showCalendar(month, year) {
 
     // creating all cells
     let date = 1;
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < 6; i++) {//adds 1 to i count in each iteration
         // creates a table row
         let row = document.createElement("tr");
 
         //creating individual cells, filing them up with data.
-        for (let j = 0; j < 7; j++) {
+        for (let j = 0; j < 7; j++) {//adds 1 to j count in each iteration
             if (i === 0 && j < firstDay) {
                 let cell = document.createElement("td");
                 let cellText = document.createTextNode("");
-                cell.appendChild(cellText);
+                cell.appendChild(cellText);//appends a node as the last child of a node so appends cellText as the las child of the cell node
                 row.appendChild(cell);
             }
             else if (date > daysInMonth) {
@@ -79,11 +60,18 @@ function showCalendar(month, year) {
                 let cell = document.createElement("td");
                 let cellText = document.createTextNode(date);
                 if (date === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
-                    cell.classList.add("bg-info");
-                } // color today's date
-                cell.appendChild(cellText);
+                    cell.classList.add("bg-info");// color today's date if the fetched date, month and year allign with that of today
+                }
+                items.forEach(i => {
+                    var dueDateForCalendar = new Date(i['DueDate']);
+                    if (date === dueDateForCalendar.getDate() && month === dueDateForCalendar.getMonth() && year === dueDateForCalendar.getFullYear()){
+                        cell.classList.add("bg-primary");
+
+                    }
+                });
+                cell.appendChild(cellText);//appends a node as the last child of a node.
                 row.appendChild(cell);
-                date++;
+                date++// this adds 1 to the date in each iteration
             }
         }
 
@@ -91,6 +79,40 @@ function showCalendar(month, year) {
     }
 
 }
+
+
+
+function next() {
+    currentYear = (currentMonth === 11) ? currentYear + 1 : currentYear;// 11 is used here as the getMonth() method returns the month (from 0 to 11) for the specified date
+    currentMonth = (currentMonth + 1) % 12; // divide by 12 for how many months there are in a year
+    getItems(function (items) {
+        showCalendar(currentMonth,currentYear,items);
+    });
+
+
+}
+
+function previous() {
+    currentYear = (currentMonth === 0) ? currentYear - 1 : currentYear;
+    currentMonth = (currentMonth === 0) ? 11 : currentMonth - 1;
+    getItems(function (items) {
+        showCalendar(currentMonth,currentYear,items);
+    });
+
+
+}
+
+function jump() {
+    currentYear = parseInt(selectYear.value)//parseInt() function parses a string and returns an integer. Where only the first number in the string is returned
+    currentMonth = parseInt(selectMonth.value);
+    console.log(currentYear);
+    console.log(currentMonth);
+    getItems(function (items) {
+        showCalendar(currentMonth,currentYear,items);
+    });
+}
+
+
 
 /**
  * Makes an HTTP request to the Todo list API
@@ -208,6 +230,8 @@ function clearAndRefresh(){
  */
 function updateItem(id, name, description, assignee, dueDate, props) {
 }
+
+
 function deleteItem(id){
     makeRequest('DELETE','/item/'+ id, null, function (data){
         clearAndRefresh();
@@ -258,13 +282,9 @@ function createItemTable(items) {
         }else if (days < 0){
             daysWithText = '<p style="color:red;"> DEADLINE EXPIRED </p>'
 
-        }
-
-
+        } 
 
         element = '<div>'
-        //element += '<tr><td>' + i['ID'] + '. ' + '</td>';
-
         element += '<tr><td><input type="checkbox" id="myCheck" class="tick_button" onclick="tickFunction()" ></td>';
         element += '<td><input type="checkbox" id="myCross" class="strike_button" onclick="strikeFunction()" ></td>';
         element += '<td>' + i['Name'] + '</td>';
@@ -294,11 +314,11 @@ function strikeFunction() {
         }
     });
 }
-function tickFunction(){
+function tickFunction() {
     var checkBox = document.getElementById("myCheck");
-    if (checkBox.checked == true){
+    if (checkBox.checked == true) {
     }
-    }
+}
 
 
 
@@ -309,8 +329,12 @@ function tickFunction(){
 function refreshList() {
     getItems(function (items) {
         createItemTable(items);
+        showCalendar(currentMonth,currentYear,items);
     });
 }
+
+
+
 
 $().ready(function () { //* this function means that when the page has finished loading, it calls the refreshlist function, where this refreshlist function calls the getItems function with fucnction createItemTable as a function. (it's passing a function as an argument) */
     refreshList();
