@@ -66,6 +66,7 @@ function showCalendar(month, year,items) {
                     var dueDateForCalendar = new Date(i['DueDate']);
                     if (date === dueDateForCalendar.getDate() && month === dueDateForCalendar.getMonth() && year === dueDateForCalendar.getFullYear()){
                         cell.classList.add("bg-primary");
+                        cell.id = "cal_item_" + i['ID'];
                         cell.addEventListener("mouseover", function(event) {
                             /prompt(i['Desc']);
                             //console.log(i.Desc)
