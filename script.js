@@ -67,26 +67,8 @@ function showCalendar(month, year,items) {
                     if (date === dueDateForCalendar.getDate() && month === dueDateForCalendar.getMonth() && year === dueDateForCalendar.getFullYear()){
                         cell.classList.add("bg-primary");
                         cell.id = "cal_item_" + i['ID'];
-                        cell.addEventListener("mouseover", function(event) {
-
-                            var target = event.target;
-                            target.classList.toggle("show");
-
-
-
-
-
-
-
-
-
-                            
-
-                        });
-
-
-
-
+                        cell.setAttribute('data-toggle', 'tooltip');
+                        cell.setAttribute('title',"Task name: " + i['Name'] + "\nTask description: " + i['Desc']);//this sets what you want to appear in the pop up
 
                     }
 
