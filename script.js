@@ -66,10 +66,16 @@ function showCalendar(month, year,items) {
                     var dueDateForCalendar = new Date(i['DueDate']);
                     if (date === dueDateForCalendar.getDate() && month === dueDateForCalendar.getMonth() && year === dueDateForCalendar.getFullYear()){
                         cell.classList.add("bg-primary");
-                        $(this).cell.hover(function(i) {
-                            console.log(i['Desc']);
+                        cell.addEventListener("mouseover", function(event) {
+                            /prompt(i['Desc']);
+                            //console.log(i.Desc)
+                            //$(i['Desc']).show();
+
+                            //window.prompt(i['Desc']);
+                            //console.log(i['Desc']);
+                            alert("Task: " + i['Name'] + " " + "\nDescription: " + i['Desc']);
                         });
-                        
+
 
 
 
