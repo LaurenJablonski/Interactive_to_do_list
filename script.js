@@ -66,8 +66,16 @@ function showCalendar(month, year,items) {
                     var dueDateForCalendar = new Date(i['DueDate']);
                     if (date === dueDateForCalendar.getDate() && month === dueDateForCalendar.getMonth() && year === dueDateForCalendar.getFullYear()){
                         cell.classList.add("bg-primary");
+                        $(this).cell.hover(function(i) {
+                            console.log(i['Desc']);
+                        });
+                        
+
+
+
 
                     }
+
                 });
                 cell.appendChild(cellText);//appends a node as the last child of a node.
                 row.appendChild(cell);
@@ -282,7 +290,7 @@ function createItemTable(items) {
         }else if (days < 0){
             daysWithText = '<p style="color:red;"> DEADLINE EXPIRED </p>'
 
-        } 
+        }
 
         element = '<div>'
         element += '<tr><td><input type="checkbox" id="myCheck" class="tick_button" onclick="tickFunction()" ></td>';
