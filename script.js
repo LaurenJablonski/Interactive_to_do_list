@@ -47,7 +47,7 @@ function showCalendar(month, year,items) {
         //creating individual cells, filing them up with data.
         for (let j = 0; j < 7; j++) {//adds 1 to j count in each iteration
             if (i === 0 && j < firstDay) {
-                let cell = document.createElement("td");
+                let cell = document.createElement("td");//creates a table column
                 let cellText = document.createTextNode("");
                 cell.appendChild(cellText);//appends a node as the last child of a node so appends cellText as the las child of the cell node
                 row.appendChild(cell);
@@ -66,14 +66,22 @@ function showCalendar(month, year,items) {
                     var dueDateForCalendar = new Date(i['DueDate']);
                     if (date === dueDateForCalendar.getDate() && month === dueDateForCalendar.getMonth() && year === dueDateForCalendar.getFullYear()){
                         cell.classList.add("bg-primary");
+                        cell.id = "cal_item_" + i['ID'];
                         cell.addEventListener("mouseover", function(event) {
-                            /prompt(i['Desc']);
-                            //console.log(i.Desc)
-                            //$(i['Desc']).show();
 
-                            //window.prompt(i['Desc']);
-                            //console.log(i['Desc']);
-                            alert("Task: " + i['Name'] + " " + "\nDescription: " + i['Desc']);
+                            var target = event.target;
+                            target.classList.toggle("show");
+
+
+
+
+
+
+
+
+
+                            
+
                         });
 
 
