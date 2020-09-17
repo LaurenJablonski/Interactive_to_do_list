@@ -1,0 +1,23 @@
+{
+  "name": "interactive_to_do_list",
+  "version": "1.0.0",
+  "description": "file needed when using node to help build my server",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LaurenJablonski/Interactive_to_do_list.git"
+  },
+  "author": "Lauren Jablonski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LaurenJablonski/Interactive_to_do_list/issues"
+  },
+  "homepage": "https://github.com/LaurenJablonski/Interactive_to_do_list#readme",
+  "dependencies": {
+    "sqlite3": "^5.0.0"
+  }
+}

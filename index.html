@@ -45,7 +45,7 @@
       <div id="moveBoxes" style="left: 80%">
         <form class="form-inline" style="left: 80%">
           <select class="form-control col-sm-4" name="month" id="month" onchange="jump()">
-            <option value=0>Jan</option>
+            <option value=0>Jan</option><!-- values for the drop down menu for the jump to button -->
             <option value=1>Feb</option>
             <option value=2>Mar</option>
             <option value=3>Apr</option>
@@ -72,7 +72,7 @@
       <thead>
       <tr id="calendertable">
 
-        <th style="background-color: #F16227">Sun</th>
+        <th style="background-color: #F16227">Sun</th><!-- defines the headers in the table -->
         <th style="background-color: #F16227">Mon</th>
         <th style="background-color: #F16227">Tue</th>
         <th style="background-color: #F16227">Wed</th>
@@ -84,22 +84,14 @@
       </thead>
 
       <tbody id="calendar-body">
-
       </tbody>
     </table>
-
-
-
 
     <div class="form-inline" id="forwardAndBackButtons">
       <button class="btn btn-outline-primary col-sm-6" id="previous" onclick="previous()">Prev</button>
       <button class="btn btn-outline-primary col-sm-6" id="next" onclick="next()">Next</button>
 
-
-
-
-
-    <br/>
+      <br/>
 
     </div>
 
@@ -115,7 +107,7 @@
     <input id="nameTextboxID" type="name" class="new task" placeholder=" Name of new task">
     <input id="descriptionTextboxID" type="desc" class="new desc" placeholder=" New task description">
     <input id="dateTextboxID" type="date" class="new due date" placeholder=" New tasks due date">
-    <input type="button" id="button1" value="+" onclick="submitItem()"> <!-- if this breaks the code and it stops working that revert back to the prev version of it working -->
+    <input type="button" id="button1" value="+" onclick="submitItem()">
     <input type="button" id="button2" value="Clear list" onclick="removeAll()">
 
   </form>
@@ -126,6 +118,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 <script src="script.js"></script>
+<script src="server.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 </body>
