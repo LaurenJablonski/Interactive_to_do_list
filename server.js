@@ -4,7 +4,7 @@ const fs = require('fs');// this allows us to read another file in our code. thi
 
  const server = http.createServer((request,response) => {//create a server using the http library you just imported and call the create server function on this object. The create server function takes a function that has 2 parameters, request and response which is going to handle all the activity on our server. SO everytime someone requests a page on our server, it is going to call this function.
 
-    const { method, url, headers} = request
+    const { method, url, headers} = request // in order to make a request you need these 3 parameters
 
     if (method === 'GET' && url === "/items"){ //use the response object passed into this function that gives the user a response
         response.statuscode = 200 //tells the user that the status is okay
@@ -20,7 +20,7 @@ const fs = require('fs');// this allows us to read another file in our code. thi
 
 
         })
-        response.end() //end the response
+
         let dictionary = {
             "items":[
 
@@ -55,11 +55,12 @@ const fs = require('fs');// this allows us to read another file in our code. thi
     }
 
     response.write(JSON.stringify(responseBody))
+    response.end() //end the response
 
 }
 })
 
-server.listen(8080,function(error){
+server.listen(8080,function(error){//tells the server to listen on port 8080
     if (error){
         console.log('something went wrong', error)
     }else{
@@ -68,7 +69,6 @@ server.listen(8080,function(error){
 
 
 
-     //tells the server to listen on port 8080
 
 
 
@@ -96,51 +96,8 @@ server.listen(8080,function(error){
 
 
 
-//var http = require('http');
-//var fs = require('fs')
 
-//http.createServer(function(req,res) {//callback function used to handle the requests
 
-  //  console.log(req);
-    //var baseUrl = 'http://localhost:8080';
-    //const { method, baseUrl } = request;
-
-    //if (method === 'GET' && url === baseUrl + "/items"){
-      //  response.statusCode = 200
-        //const responseBody = {
-          //  method,
-            //url,
-            //body: ['Name': name, 'Desc': description,
-            //'Assignee': assignee, 'DueDate': dueDate,
-            //'Props': props]
-        //}
-        //response.write(JSON.stringify(responseBody))//think this is where it will actually appear on the page
-        //response.end()
-    //}
-    //if (method === 'POST' && url === baseUrl + "/item"){
-      //  response.statusCode = 200
-        //const responseBody = {
-          //  method,
-            //url,
-            //body: ['Name': name, 'Desc': description,
-            //'Assignee': assignee, 'DueDate': dueDate,
-            //'Props': props]
-    //}
-      //  response.write(JSON.stringify(responseBody))
-        //response.end()
-    //}
-    //if (method === 'DELETE' && url === baseUrl + "/item/"){
-      //  response.statusCode = 200
-        //const responseBody = {
-          //  method,
-            //url,
-            //body: []//returns an empty array since the item is deleted so you want the response to be nothing
-    //}
-      //  response.write(JSON.stringify(responseBody))
-        //response.end()
-    //}
-//}).listen(8080); //tells the server to listen on port 8080
-//console.log("listening");
 
 
 
