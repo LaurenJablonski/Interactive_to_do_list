@@ -132,7 +132,7 @@ function jump() {
  * @param {function} errorCb On error callback
  */
 function makeRequest(method, resource, body, successCb, errorCb) {
-    var baseUrl = 'C:\\Users\\jablo\\Documents\\Next Jump\\assignment_1\\Interactive_to_do_list\\server.js';
+    var baseUrl = 'http://localhost8080';
     $.ajax({ //ajax= techinique for accessing web servers from a webpage so this is where the connection is being made to the API. It sends teh http requests easily and quickly as you don't have to reload the page.
         method: method,
         url: baseUrl + resource,
@@ -291,8 +291,8 @@ function createItemTable(items) {
     $('#list').html(list);
 }
 
-let data = require('./server');
-alert(data);
+//let data = require('./server');
+//alert(data);
 
 /**
  * This function allows you to tick a button when you have completed a task whilst simultaneously crossing out that element in the table
