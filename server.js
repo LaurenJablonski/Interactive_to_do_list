@@ -19,7 +19,7 @@ const fs = require('fs');// this allows us to read another file in our code. thi
             }
 
 
-        })
+        });
 
         let dictionary = {
             "items":[

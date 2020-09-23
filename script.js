@@ -132,7 +132,7 @@ function jump() {
  * @param {function} errorCb On error callback
  */
 function makeRequest(method, resource, body, successCb, errorCb) {
-    var baseUrl = 'http://localhost8080';
+    var baseUrl = 'http://localhost8080/';
     $.ajax({ //ajax= techinique for accessing web servers from a webpage so this is where the connection is being made to the API. It sends teh http requests easily and quickly as you don't have to reload the page.
         method: method,
         url: baseUrl + resource,
@@ -278,8 +278,8 @@ function createItemTable(items) {
         element = '<div>'
         element += '<tr><td><input type="checkbox" id="myCheck" class="tick_button" onclick="tickFunction()" ></td>';
         element += '<td><input type="checkbox" id="myCross" class="strike_button" onclick="strikeFunction()" ></td>';
-        element += '<td>' + dictionary[i].Name + '</td>';
-        element += '<td>' + dictionary[i].Desc+ '</td>';
+        element += '<td>' + i['Name'] + '</td>'; // shouldn't this be changed to dictionary?
+        element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';
         element += '<td><button type="button" id="deleteButton"  value="Delete" onclick="deleteItem(' + i.ID + ')"><i class="fa fa-trash"></i></button></td>';
         element += '</div>'
