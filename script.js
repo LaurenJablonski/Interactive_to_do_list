@@ -132,7 +132,7 @@ function jump() {
  * @param {function} errorCb On error callback
  */
 function makeRequest(method, resource, body, successCb, errorCb) {
-    var baseUrl = 'http://localhost8080/';
+    var baseUrl = 'http://localhost:8080';
     $.ajax({ //ajax= techinique for accessing web servers from a webpage so this is where the connection is being made to the API. It sends teh http requests easily and quickly as you don't have to reload the page.
         method: method,
         url: baseUrl + resource,
