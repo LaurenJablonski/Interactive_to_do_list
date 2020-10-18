@@ -123,7 +123,6 @@ function jump() {
 
 /**
  * Makes an HTTP request to the Todo list API
- * You shouldn't need to modify this - but feel free to do so!
  *
  * @param {string} method HTTP method/verb to be used
  * @param {string} resource Resource to be acted upon on the server, e.g. '/item' or '/item/3'(latter means to get the third item in the todo list)
@@ -141,6 +140,14 @@ function makeRequest(method, resource, body, successCb, errorCb) {
         success: successCb,//on success then call successCb
         error: errorCb//on error then call errorCb
     });
+
+    //new request
+    var http_request;
+    http_request = new XMLHTTPRequest(); // this interacts with the server
+    http_request.open("GET", "server.js"); //because I'm thinking I need to GET the information from the server to then display it on my webpage
+    http_request.withCredentials = true;
+    http_request.setRequesteHeader("Content-Type", "application/json");
+    http_request.send({ 'request': "authentification token"});
 
 }
 

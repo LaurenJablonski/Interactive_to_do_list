@@ -1,12 +1,13 @@
 const http = require('http'); // you get the http library in node.js. Note you have to use require in node.js in order to get a library. This includes the http library into our code inside the http variable
 const fs = require('fs');// this allows us to read another file in our code. this variable fs allows us to do all the file handling that we need to do
 
-const express = require('express');
-const router = express.Router();
-const cors = require('cors');
 
-router.options('/', cors())
-module.exports = router;
+//CORS policy
+Access-Control-Allow-Origin: 'https://localhost:8080';
+Access-Control-Allow-Credentials: true //think this is cookies or authentification
+Access-Contol-Allow-Methods: GET
+Access-Control-Allow-Headers: Content-Type // so this means that https://localhost:8080 is allowed to make a GET request
+
 
 
 const server = http.createServer((request,response) => {//create a server using the http library you just imported and call the create server function on this object. The create server function takes a function that has 2 parameters, request and response which is going to handle all the activity on our server. SO everytime someone requests a page on our server, it is going to call this function.
