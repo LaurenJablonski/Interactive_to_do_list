@@ -142,14 +142,30 @@ function makeRequest(method, resource, body, successCb, errorCb) {
     });
 
     //new request
-    var http_request;
-    http_request = new XMLHTTPRequest(); // this interacts with the server
-    http_request.open("GET", "server.js"); //because I'm thinking I need to GET the information from the server to then display it on my webpage
-    http_request.withCredentials = true;
-    http_request.setRequesteHeader("Content-Type", "application/json");
-    http_request.send({ 'request': "authentification token"});
+    //var http_request;
+    //var XMLHTTPRequest = require("xmlhttprequest").XMLHTTPRequest;
+    const http_request = new XMLHttpRequest();//interacts with the server
+    http_request.onreadystatechange = function () {
+        if (http_request.readyState === XMLHttpRequest.DONE) {
+            var status = http_request.status;
+            if (status === 0 || (status >= 200 && status < 400)) {
+                // The request has been completed successfully
+                //console.log(items);
+                console.log(http_request.responseText); // the response you are getting back is the entire html document, but I want just the dictionary part
+                //console.log(resource);
+            } else {
+                // there has been an error with the request
+            }
+        }
+    };
+    http_request.open("GET", "http://localhost:8080/"); //because I'm thinking I need to GET the information from the server to then display it on my webpage. Note this is always in the format ("method","url")
+    //http_request.withCredentials = true;
+    http_request.setRequestHeader("Context-Type",  "text/html");
+    http_request.send(null); //online it said if it was a GET request this had to be null, was different for other requests like POST
 
 }
+
+
 
 
 /**
@@ -160,6 +176,7 @@ function makeRequest(method, resource, body, successCb, errorCb) {
 function getItems(callback) {
     makeRequest('GET', '/item', null, function (data) {
         var items = data['Data'];//object['properties of the object']
+        //console.log(items)
         callback(items);//if the request was successful then callback(items)
     }, function () {
         console.log("An error occured in getItems");
