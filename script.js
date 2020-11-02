@@ -121,52 +121,52 @@ function jump() {
 }
 
 
-// /**
-//  * Makes an HTTP request to the Todo list API
-//  *
-//  * @param {string} method HTTP method/verb to be used
-//  * @param {string} resource Resource to be acted upon on the server, e.g. '/item' or '/item/3'(latter means to get the third item in the todo list)
-//  * @param {Object} body Request body (if needed)
-//  * @param {function} successCb On success callback
-//  * @param {function} errorCb On error callback
-//  */
-// function makeRequest(method, resource, body, successCb, errorCb) {
-//     var baseUrl = 'http://localhost:8080';
-//     $.ajax({ //ajax= techinique for accessing web servers from a webpage so this is where the connection is being made to the API. It sends teh http requests easily and quickly as you don't have to reload the page.
-//         method: method,
-//         url: baseUrl + resource,
-//         headers: {'token': getToken()},
-//         data: body ? JSON.stringify(body) : null,
-//         success: successCb,//on success then call successCb
-//         error: errorCb//on error then call errorCb
-//     });
-// }
-
-function makeRequest(method,resource, successCb, errorCb){
-    //new request
-    const http_request = new XMLHttpRequest();//interacts with the server
-    var baseUrl ="http://localhost:8080/"
-
-    http_request.open(method,baseUrl); //because I'm thinking I need to GET the information from the server to then display it on my webpage. Note this is always in the format ("method","url")
-    //http_request.withCredentials = true;
-    http_request.setRequestHeader("Context-Type",  "text/html");
-    http_request.send(null); //online it said if it was a GET request this had to be null, was different for other requests like POST
-
-        http_request.onreadystatechange = function () {
-        if (http_request.readyState === XMLHttpRequest.DONE) {
-            if (this.readyState == 4 || (status >= 200 && status < 400)) {
-                console.log("request finished and response is ready")
-                console.log(status)
-                console.log(http_request.responseText);
-
-            } else{
-                console.log("there has been an error with the request. The ready state is" + this.readyState)
-        }
-
-        };
-    };
-
+/**
+ * Makes an HTTP request to the Todo list API
+ *
+ * @param {string} method HTTP method/verb to be used
+ * @param {string} resource Resource to be acted upon on the server, e.g. '/item' or '/item/3'(latter means to get the third item in the todo list)
+ * @param {Object} body Request body (if needed)
+ * @param {function} successCb On success callback
+ * @param {function} errorCb On error callback
+ */
+function makeRequest(method, resource, body, successCb, errorCb) {
+    var baseUrl = 'http://localhost:8080';
+    $.ajax({ //ajax= techinique for accessing web servers from a webpage so this is where the connection is being made to the API. It sends teh http requests easily and quickly as you don't have to reload the page.
+        method: method,
+        url: baseUrl + resource,
+        headers: {'token': getToken()},
+        data: body ? JSON.stringify(body) : null,
+        success: successCb,//on success then call successCb
+        error: errorCb//on error then call errorCb
+    });
 }
+
+// function makeRequest(method,resource, successCb, errorCb){
+//     //new request
+//     const http_request = new XMLHttpRequest();//interacts with the server
+//     var baseUrl ="http://localhost:8080/"
+//
+//     http_request.open(method,baseUrl); //because I'm thinking I need to GET the information from the server to then display it on my webpage. Note this is always in the format ("method","url")
+//     //http_request.withCredentials = true;
+//     http_request.setRequestHeader("Context-Type",  "text/html");
+//     http_request.send(null); //online it said if it was a GET request this had to be null, was different for other requests like POST
+//
+//         http_request.onreadystatechange = function () {
+//         if (http_request.readyState === XMLHttpRequest.DONE) {
+//             if (this.readyState == 4 || (status >= 200 && status < 400)) {
+//                 console.log("request finished and response is ready")
+//                 console.log(status)
+//                 console.log(http_request.responseText);
+//
+//             } else{
+//                 console.log("there has been an error with the request. The ready state is" + this.readyState)
+//         }
+//
+//         };
+//     };
+//
+// }
 
 
 /**
@@ -175,8 +175,8 @@ function makeRequest(method,resource, successCb, errorCb){
  * @param {function} callback On success callback, function takes one argument: the item array
  */
 function getItems(callback) {
-    makeRequest('GET', '/item', function (data) {
-        var items = dictionary['items'];//object['properties of the object']
+    makeRequest('GET', '/item',null, function (data) {
+        var items = data['Data'];//object['properties of the object']
         //console.log(items)
         callback(items);//if the request was successful then callback(items)
     }, function () {
@@ -202,7 +202,7 @@ function addItem(name, description, assignee, dueDate, props) {
         'Assignee': assignee, 'DueDate': dueDate,
         'Props': props};
 
-    makeRequest('POST', '/item',function (data) {
+    makeRequest('POST', '/item', body, function (data) {
         /** It makes the request and if the request is successful then it executes getItems(). If no success then it tells you there's an error*/
         console.log('success');
         getItems();
