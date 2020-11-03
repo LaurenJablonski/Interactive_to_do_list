@@ -6,6 +6,7 @@ const server = http.createServer((request,response) => {//create a server using 
 
     const {method, url, headers} = request; // in order to make a request you need these 3 parameters
     console.log(method, url, headers);
+
     //if (method === 'GET' && url === "/"){ //use the response object passed into this function that gives the user a response
     response.statuscode = 200 //tells the user that the status is okay
     response.setHeader("Content-Type", "text/html") //tells the browser we'll be writing in ("key", "value we want to set to that header"). tells it that the information being passed to it is in json, and so it should pass it as json.
@@ -15,59 +16,64 @@ const server = http.createServer((request,response) => {//create a server using 
     //response.setHeader("Access-Control-Allow-Credentials", "true") //think this is cookies or authentification
     response.setHeader("Access-Control-Allow-Origin", "*") // allows any origin to access the server
     response.setHeader("Access-Control-Allow-Headers", "*")
-    response.setHeader("Access-Control-Allow-Methods", "GET") // so this means that https://localhost:8080 is allowed to make a GET request
+    response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE") // so this means that https://localhost:8080 is allowed to make a GET request
+
+    if (method === 'OPTIONS') {
+        console.log("PREFLIGHT OPTIONS REQUEST")
+
+    }if (method === 'GET'){
+        console.log("GET REQUEST ALLOWED")
 
 
-    fs.readFile('index.html', function (error, data) {
-        if (error) {
-            response.statuscode = 404 // 404 just means that we are not able to find what you are looking for
-            response.write('Error: File not found.')
-        } else {
-            response.write(data)//this will just write all the information that is in html
 
-            let dictionary = {
-                "items": [
+        fs.readFile('index.html', function (error, data) {
+            if (error) {
+                response.statuscode = 404 // 404 just means that we are not able to find what you are looking for
+                response.write('Error: File not found.')
+            } else {
+                response.write(data)//this will just write all the information that is in html
 
-                    {
-                        "ID": 1,
-                        "Name": "Walk the dog",
-                        "Desc": "25 min walk",
-                        "DueDate": "25/09/2020"
-                    },
-                    {
-                        "ID": 2,
-                        "Name": "Go to shops",
-                        "Desc": "buy bread",
-                        "DueDate": "14/09/2020"
+                let dictionary = {
+                    "items": [
 
-                    },
-                    {
-                        "ID": 3,
-                        "Name": "give presentation",
-                        "Desc": "next jump",
-                        "DueDate": "5/10/2020"
+                        {
+                            "ID": 1,
+                            "Name": "Walk the dog",
+                            "Desc": "25 min walk",
+                            "DueDate": "25/09/2020"
+                        },
+                        {
+                            "ID": 2,
+                            "Name": "Go to shops",
+                            "Desc": "buy bread",
+                            "DueDate": "14/09/2020"
 
-                    }
-                ]
+                        },
+                        {
+                            "ID": 3,
+                            "Name": "give presentation",
+                            "Desc": "next jump",
+                            "DueDate": "5/10/2020"
+
+                        }
+                    ]
+                }
+
+                const responseBody = {
+                    headers,
+                    method,
+                    url,
+                    body: dictionary
+                }
+
+                response.write(JSON.stringify(responseBody))
             }
 
+            response.end(); //end the response
 
+        });
 
-            const responseBody = {
-                headers,
-                method,
-                url,
-                body: dictionary
-            }
-
-            response.write(JSON.stringify(responseBody))
-        }
-
-        response.end(); //end the response
-
-    });
-
-})
+}})
 
 server.listen(8080,function(error) {//tells the server to listen on port 8080
     if (error) {

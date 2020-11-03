@@ -142,6 +142,8 @@ function makeRequest(method, resource, body, successCb, errorCb) {
     });
 }
 
+
+
 // function makeRequest(method,resource, successCb, errorCb){
 //     //new request
 //     const http_request = new XMLHttpRequest();//interacts with the server
@@ -151,8 +153,7 @@ function makeRequest(method, resource, body, successCb, errorCb) {
 //     //http_request.withCredentials = true;
 //     http_request.setRequestHeader("Context-Type",  "text/html");
 //     http_request.send(null); //online it said if it was a GET request this had to be null, was different for other requests like POST
-//
-//         http_request.onreadystatechange = function () {
+//     http_request.onreadystatechange = function () {
 //         if (http_request.readyState === XMLHttpRequest.DONE) {
 //             if (this.readyState == 4 || (status >= 200 && status < 400)) {
 //                 console.log("request finished and response is ready")
@@ -161,10 +162,9 @@ function makeRequest(method, resource, body, successCb, errorCb) {
 //
 //             } else{
 //                 console.log("there has been an error with the request. The ready state is" + this.readyState)
-//         }
-//
-//         };
-//     };
+//             }
+// };
+// };
 //
 // }
 
@@ -175,10 +175,13 @@ function makeRequest(method, resource, body, successCb, errorCb) {
  * @param {function} callback On success callback, function takes one argument: the item array
  */
 function getItems(callback) {
-    makeRequest('GET', '/item',null, function (data) {
+    makeRequest('GET', '/item',null, function (data) {// what I seem to put as the body here (null) is appended to the end of the http so it becomes http://localhost:8080/item?%22hello%22
         var items = data['Data'];//object['properties of the object']
         //console.log(items)
+        console.log("hello world")
         callback(items);//if the request was successful then callback(items)
+
+
     }, function () {
         console.log("An error occured in getItems");
         callback([]);// if the request ws unsuccessful then callback an empty array and state in the console that an error has occured
