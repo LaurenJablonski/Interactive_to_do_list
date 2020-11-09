@@ -132,6 +132,7 @@ function jump() {
  */
 function makeRequest(method, resource, body, successCb, errorCb) {
     var baseUrl = 'http://localhost:8080';
+    console.log(JSON.stringify(body));
     $.ajax({ //ajax= techinique for accessing web servers from a webpage so this is where the connection is being made to the API. It sends teh http requests easily and quickly as you don't have to reload the page.
         method: method,
         url: baseUrl + resource,
@@ -175,10 +176,11 @@ function makeRequest(method, resource, body, successCb, errorCb) {
  * @param {function} callback On success callback, function takes one argument: the item array
  */
 function getItems(callback) {
-    makeRequest('GET', '/item',null, function (data) {// what I seem to put as the body here (null) is appended to the end of the http so it becomes http://localhost:8080/item?%22hello%22
+    //import {getResponses} from "./server.js";
+    //getResponses = require("./server");
+    makeRequest('GET','/item',null, function (data) {// what I seem to put as the body here (null) is appended to the end of the http so it becomes http://localhost:8080/item?%22hello%22
         var items = data['Data'];//object['properties of the object']
         //console.log(items)
-        console.log("hello world")
         callback(items);//if the request was successful then callback(items)
 
 
@@ -285,7 +287,7 @@ function createItemTable(items) {
 
     items.forEach(i => {
         arrayOfItemIDs.push(i.ID)
-        var itemDueDate = new Date(dictionary[i].DueDate);
+        var itemDueDate = new Date(i['DueDate']);
         var distance = itemDueDate - now;//calculates the difference between the current date and due date
         var days = Math.floor(distance / (1000 * 60 * 60 * 24));//gives you the amount of days
         var daysWithText = days;
