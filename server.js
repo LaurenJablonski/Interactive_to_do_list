@@ -4,38 +4,42 @@ const fs = require('fs');// this allows us to read another file in our code. thi
 
 const server = http.createServer((request,response) => {//create a server using the http library you just imported and call the create server function on this object. The create server function takes a function that has 2 parameters, request and response which is going to handle all the activity on our server. SO everytime someone requests a page on our server, it is going to call this function.
 
-    response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE") // so this means that https://localhost:8080 is allowed to make a GET request
     const {method, url, headers} = request;
-// checks the headers
-    var isPreflight = function(request){ // this detects if the incoming request is a preflight request. It checks if the request is an OPTIONS request, if the request has an origin header and if is has a Access-Control-Request-Method header
-        var isHttpOptions = request.method === 'OPTIONS';
-        var hasOriginHeader = request.headers['origin'];
-        var hasRequestMethod = request.headers['Access-Control-Request-Method'];// this header asks the server for permission to make a request using a certain HTTP method
-        return isHttpOptions && hasOriginHeader && hasRequestMethod;
-    };
 
     // assigns values to the headers
-    if (method === 'OPTIONS' && url === "/item") {
+    if (method === 'OPTIONS' && url === '/item') {
         console.log("PREFLIGHT OPTIONS REQUEST")
-        var handleCorsOptions = function (request, response) {
-            //response.set("Access-Control-Allow-Origin", "*");
-            if (isPreflight(request)) {
-                response.setHeader("Access-Control-Allow-Origin", "*"); // allows any origin to access the server
-                response.setHeader("Access-Control-Allow-Headers", "*");
-                response.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE");
-                response.setHeader("Content-Type", "text/html");
 
-                response.statuscode = 404;
-                response.end();
-                return;
-            }
+        // checks the request is preflight
 
-        }
-    };
+        var isPreflight = function(request) { // this detects if the incoming request is a preflight request. It checks if the request is an OPTIONS request, if the request has an origin header and if is has a Access-Control-Request-Method header
+
+            var isHttpOptions = request.method === 'OPTIONS';
+            var hasOriginHeader = request.headers === '*';
+            var hasRequestMethod = request.headers === 'access-control-request-method';// this header asks the server for permission to make a request using a certain HTTP method
+            return isHttpOptions && hasOriginHeader && hasRequestMethod;
+
+        };
+        isPreflight(method);
+
+        //then handles the preflight request
+
+             var handleCors = function(request, response){
+                 response.setHeader('Access-Control-Allow-Origin', '*'); // allows any origin to access the server
+                 if (isPreflight(request)){
+                     console.log("its a preflight request");
+                     response.setHeader('Access-Control-Allow-Headers', '*');
+                     response.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
+                     response.setHeader('Content-Type', 'text/html');
+                     response.statuscode = 404;
+                     response.end();
+                     return;
+
+                 }
+             }};
 
 
-
-    if (method === 'GET' && url === "/item"){
+    if (method === 'GET' && url === '/item'){
         fs.readFile('index.html', function (error, data) {
             if (error) {
                 response.statuscode = 404 // 404 just means that we are not able to find what you are looking for
@@ -86,10 +90,9 @@ const server = http.createServer((request,response) => {//create a server using 
             response.end(); //end the response
 
 
-        })};
+        })}});
 
 
-    });
 
 
 server.listen(8080,function(error) {//tells the server to listen on port 8080
