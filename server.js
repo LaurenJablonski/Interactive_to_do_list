@@ -2,12 +2,18 @@ const http = require('http'); // you get the http library in node.js. Note you h
 const fs = require('fs');// this allows us to read another file in our code. this variable fs allows us to do all the file handling that we need to do
 
 
+
+
+
+
 const server = http.createServer((request,response) => {//create a server using the http library you just imported and call the create server function on this object. The create server function takes a function that has 2 parameters, request and response which is going to handle all the activity on our server. SO everytime someone requests a page on our server, it is going to call this function.
 
-    const {method, url, headers} = request;
+    const {headers, method, url} = request; //this request object is an instant of an Incoming Message
+    //console.log(request.method); having this here tells you what the original request is and it is OPTIONS
+
 
     // assigns values to the headers
-    if (method === 'OPTIONS' && url === '/item') {
+    if (request.method === 'OPTIONS' && request.url === '/item') {
         console.log("PREFLIGHT OPTIONS REQUEST")
 
         // checks the request is preflight
@@ -15,28 +21,39 @@ const server = http.createServer((request,response) => {//create a server using 
         var isPreflight = function(request) { // this detects if the incoming request is a preflight request. It checks if the request is an OPTIONS request, if the request has an origin header and if is has a Access-Control-Request-Method header
 
             var isHttpOptions = request.method === 'OPTIONS';
-            var hasOriginHeader = request.headers === '*';
-            var hasRequestMethod = request.headers === 'access-control-request-method';// this header asks the server for permission to make a request using a certain HTTP method
+            var hasOriginHeader = request.headers['origin'] === '*';
+            var hasRequestMethod = request.headers['access-control-request-method']
+            //var hasOriginHeader = request.headers === '*';
+            //var hasRequestMethod = request.headers === 'access-control-request-method';// this header asks the server for permission to make a request using a certain HTTP method
             return isHttpOptions && hasOriginHeader && hasRequestMethod;
 
         };
-        isPreflight(method);
+        console.log("hello");
+       console.log(isPreflight(request));
+       console.log(request.headers);
 
         //then handles the preflight request
 
-             var handleCors = function(request, response){
-                 response.setHeader('Access-Control-Allow-Origin', '*'); // allows any origin to access the server
-                 if (isPreflight(request)){
-                     console.log("its a preflight request");
-                     response.setHeader('Access-Control-Allow-Headers', '*');
-                     response.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
-                     response.setHeader('Content-Type', 'text/html');
-                     response.statuscode = 404;
-                     response.end();
-                     return;
+         var handleCors = function(request, response){
+             response.setHeader('Access-Control-Allow-Origin', '*'); // allows any origin to access the server
+             if (isPreflight(request)){
+                 console.log("its a preflight request");
+                 response.setHeader('Access-Control-Allow-Headers', '*');
+                 response.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
+                 response.setHeader('Content-Type', 'text/html');
+                 response.statuscode = 404;
+                 response.end();
+                 return;
 
-                 }
-             }};
+             } else{
+                 console.log("no this is not a preflight request");
+             }
+
+         }
+
+    console.log(handleCors(request,response))};
+
+
 
 
     if (method === 'GET' && url === '/item'){
