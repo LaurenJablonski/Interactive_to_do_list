@@ -21,7 +21,7 @@ const server = http.createServer((request,response) => {//create a server using 
 
         var handleCors = function (request, response) {
             console.log("its a preflight request");
-            response.setHeader('Access-Control-Allow-Origin', 'http://localhost:8080'); // allows any origin to access the server
+            response.setHeader('Access-Control-Allow-Origin', '*'); // allows any origin to access the server
             response.setHeader('Access-Control-Allow-Headers', '*');
             response.setHeader('Access-Control-Allow-Methods', 'GET, POST, DELETE');
             response.setHeader('Content-Type', 'text/html');
@@ -30,16 +30,18 @@ const server = http.createServer((request,response) => {//create a server using 
             //console.log(response.headers);
             return response; //doing return response shows you the server response
         }
-        handleCors(request,response); //Without this the initial request is OPTIONS, but with it the initial request is GET
+        handleCors(request, response); //Without this the initial request is OPTIONS, but with it the initial request is GET
+    }
 
-          if (handleCors('GET', response)){
-         //if (request.method === 'GET' && request.url === '/item'){
+          //if (handleCors('GET', response)){
+         if (request.method === 'GET' && request.url === '/item'){
              console.log("hello world");
-             fs.readFile('index.html', function (error, data) {
-                 if (error) {
-                     response.statuscode = 404 // 404 just means that we are not able to find what you are looking for
-                     response.write('Error: File not found.')
-                 } else {
+             response.setHeader('Access-Control-Allow-Origin', '*');
+             // fs.readFile('index.html', function (error, data) {
+             //     if (error) {
+             //         response.statuscode = 404 // 404 just means that we are not able to find what you are looking for
+             //         response.write('Error: File not found.')
+             //     } else {
 
                      let dictionary = {
                          "items": [
@@ -67,20 +69,22 @@ const server = http.createServer((request,response) => {//create a server using 
                          ]
                      }
 
-                     response.write(data)//this will just write all the information that is in html
+                    // response.write(data)//this will just write all the information that is in html
 
-                     const responseBody = {
-                         //headers,
-                         //method,
-                         //url,
-                         body: dictionary
-                     }
 
-                     response.write(JSON.stringify(responseBody))
-                     //response.write(dictionary[2]['DueDate'])
-                     //console.log('dictionary'['Name'])
-                     console.log(responseBody);
+
+
+                 const responseBody = {
+                     //headers,
+                     //method,
+                     //url,
+                     body: dictionary
                  }
+
+                 response.write(JSON.stringify(responseBody))
+                 //response.write(dictionary[2]['DueDate'])
+                 //console.log('dictionary'['Name'])
+                 console.log(responseBody);
 
                  response.end(); //end the response
                  return responseBody;
@@ -88,10 +92,7 @@ const server = http.createServer((request,response) => {//create a server using 
 
 
 
-         })
-    }else{
-              console.log("it's not a GET request");
-          }}
+         }
 
 
 

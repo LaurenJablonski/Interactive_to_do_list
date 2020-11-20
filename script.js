@@ -179,9 +179,13 @@ function getItems(callback) {
     //import {getResponses} from "./server.js";
     //getResponses = require("./server");
     makeRequest('GET','/item',null, function (data) {// what I seem to put as the body here (null) is appended to the end of the http so it becomes http://localhost:8080/item?%22hello%22
-        var items = data['Data'];//object['properties of the object']
+        //var items = data.body['items'];//object['properties of the object']
+        var jsonData = JSON.parse(data);
+        //console.log(items);
+        console.log(jsonData.body.items);
         //console.log(items)
-        callback(items);//if the request was successful then callback(items)
+        console.log(data);
+        callback(jsonData.body.items);//if the request was successful then callback(items)
 
 
     }, function () {
