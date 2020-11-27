@@ -143,49 +143,22 @@ function makeRequest(method, resource, body, successCb, errorCb) {
     });
 }
 
-
-
-// function makeRequest(method,resource, successCb, errorCb){
-//     //new request
-//     const http_request = new XMLHttpRequest();//interacts with the server
-//     var baseUrl ="http://localhost:8080/"
-//
-//     http_request.open(method,baseUrl); //because I'm thinking I need to GET the information from the server to then display it on my webpage. Note this is always in the format ("method","url")
-//     //http_request.withCredentials = true;
-//     http_request.setRequestHeader("Context-Type",  "text/html");
-//     http_request.send(null); //online it said if it was a GET request this had to be null, was different for other requests like POST
-//     http_request.onreadystatechange = function () {
-//         if (http_request.readyState === XMLHttpRequest.DONE) {
-//             if (this.readyState == 4 || (status >= 200 && status < 400)) {
-//                 console.log("request finished and response is ready")
-//                 console.log(status)
-//                 console.log(http_request.responseText);
-//
-//             } else{
-//                 console.log("there has been an error with the request. The ready state is" + this.readyState)
-//             }
-// };
-// };
-//
-// }
-
-
 /**
  * Gets items from Todo list API (makes a GET request)
  *
  * @param {function} callback On success callback, function takes one argument: the item array
  */
 function getItems(callback) {
-    //import {getResponses} from "./server.js";
-    //getResponses = require("./server");
     makeRequest('GET','/item',null, function (data) {// what I seem to put as the body here (null) is appended to the end of the http so it becomes http://localhost:8080/item?%22hello%22
         //var items = data.body['items'];//object['properties of the object']
         var jsonData = JSON.parse(data);
         //console.log(items);
         console.log(jsonData.body.items);
         //console.log(items)
-        console.log(data);
-        callback(jsonData.body.items);//if the request was successful then callback(items)
+        //console.log(data);
+        //callback(jsonData.body.items);//if the request was successful then callback(items)
+        callback(jsonData.body.items); //without this the html of your calendar doesn't load
+
 
 
     }, function () {
@@ -205,16 +178,25 @@ function getItems(callback) {
  * @param {string} props Any other information you might want to include
  * @param {string} howlong allows the user to easily see how much time they have left to complete the task
  */
-function addItem(name, description, assignee, dueDate, props) {
-    var body = {// creates the variable for the body that will be used as a parameter in the makeRequest function
+function addItem(name, description,dueDate) {
+    var body1 = {// creates the variable for the body that will be used as a parameter in the makeRequest function
         'Name': name, 'Desc': description,
-        'Assignee': assignee, 'DueDate': dueDate,
-        'Props': props};
+        'DueDate': dueDate};
+    console.log("hiya");
+    //var jsonData = json(body1)
+    console.log([body1]);// so this is the thing i want to display which i am now sending to the console instead of acc showing on the page
+    //console.log(JSON.stringify(body1));
 
-    makeRequest('POST', '/item', body, function (data) {
+
+    makeRequest('POST', '/item', body1, function (data) {
         /** It makes the request and if the request is successful then it executes getItems(). If no success then it tells you there's an error*/
+        //callback(jsonData.body.items) = getItems()
         console.log('success');
         getItems();
+        //callback(body1);
+        console.log("hellloo");
+        console.log(jsonData.body.items.concat(body1)); //think I then need to callback this for it to actually show in the html
+        //console.log(callback.concat(body1));
 
     }, function () {
         console.log("An error occured in addItem");
@@ -247,7 +229,7 @@ function submitItem() {
         alert("Please enter a due date for the task!");
 
     } else {
-        addItem(todoItemname, todoItemDesc, '', todoItemDate, '');
+        addItem(todoItemname, todoItemDesc, todoItemDate);
         clearAndRefresh();//if name, description and due date have been added then clear the form and refresh the page.
 
     }

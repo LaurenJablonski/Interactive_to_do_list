@@ -37,13 +37,8 @@ const server = http.createServer((request,response) => {//create a server using 
          if (request.method === 'GET' && request.url === '/item'){
              console.log("hello world");
              response.setHeader('Access-Control-Allow-Origin', '*');
-             // fs.readFile('index.html', function (error, data) {
-             //     if (error) {
-             //         response.statuscode = 404 // 404 just means that we are not able to find what you are looking for
-             //         response.write('Error: File not found.')
-             //     } else {
 
-                     let dictionary = {
+             let dictionary = {
                          "items": [
 
                              {
@@ -69,11 +64,6 @@ const server = http.createServer((request,response) => {//create a server using 
                          ]
                      }
 
-                    // response.write(data)//this will just write all the information that is in html
-
-
-
-
                  const responseBody = {
                      //headers,
                      //method,
@@ -92,6 +82,41 @@ const server = http.createServer((request,response) => {//create a server using 
 
 
 
+         }
+
+         if (request.method === 'POST' && request.url === '/item'){
+         response.setHeader('Access-Control-Allow-Origin', '*');
+
+             let dictionary = {
+                 "items": [
+
+                     {
+                         "ID": 1,
+                         "Name": "Walk the dog",
+                         "Desc": "25 min walk",
+                         "DueDate": "25/09/2020"
+                     },
+                     {
+                         "ID": 2,
+                         "Name": "Go to shops",
+                         "Desc": "buy bread",
+                         "DueDate": "14/09/2020"
+
+                     },
+                     {
+                         "ID": 3,
+                         "Name": "give presentation",
+                         "Desc": "next jump",
+                         "DueDate": "5/10/2020"
+
+                     }
+                 ]
+             }
+             console.log("this is the POST response");
+
+
+         //dictionary.push(body1)
+             //console.log(responseBody.concat(body1));
          }
 
 
