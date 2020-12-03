@@ -179,23 +179,23 @@ function getItems(callback) {
  * @param {string} howlong allows the user to easily see how much time they have left to complete the task
  */
 function addItem(name, description,dueDate) {
-    var body1 = {// creates the variable for the body that will be used as a parameter in the makeRequest function
+    var body = {// creates the variable for the body that will be used as a parameter in the makeRequest function
         'Name': name, 'Desc': description,
         'DueDate': dueDate};
     console.log("hiya");
     //var jsonData = json(body1)
-    console.log([body1]);// so this is the thing i want to display which i am now sending to the console instead of acc showing on the page
+    console.log([body]);// so this is the thing i want to display which i am now sending to the console instead of acc showing on the page
     //console.log(JSON.stringify(body1));
 
 
-    makeRequest('POST', '/item', body1, function (data) {
+    makeRequest('POST', '/item', body, function (data) {
         /** It makes the request and if the request is successful then it executes getItems(). If no success then it tells you there's an error*/
         //callback(jsonData.body.items) = getItems()
         console.log('success');
         getItems();
         //callback(body1);
-        console.log("hellloo");
-        console.log(jsonData.body.items.concat(body1)); //think I then need to callback this for it to actually show in the html
+        //console.log("hellloo");
+        //console.log(jsonData.body.items.concat(body1)); //think I then need to callback this for it to actually show in the html
         //console.log(callback.concat(body1));
 
     }, function () {
