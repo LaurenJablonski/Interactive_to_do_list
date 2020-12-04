@@ -178,9 +178,9 @@ function getItems(callback) {
  * @param {string} props Any other information you might want to include
  * @param {string} howlong allows the user to easily see how much time they have left to complete the task
  */
-function addItem(id,name, description,dueDate) {
+function addItem(id,name,description,dueDate) {
     var body = {// creates the variable for the body that will be used as a parameter in the makeRequest function
-        'ID':id,'Name': name, 'Desc': description,
+        'Name': name, 'Desc': description,
         'DueDate': dueDate};
     console.log("hiya");
     //var jsonData = json(body1)
@@ -188,7 +188,7 @@ function addItem(id,name, description,dueDate) {
     //console.log(JSON.stringify(body1));
 
 
-    makeRequest('POST', '/item/' + id, body, function (data) {
+    makeRequest('POST', '/item', body, function (data) {
         /** It makes the request and if the request is successful then it executes getItems(). If no success then it tells you there's an error*/
         //callback(jsonData.body.items) = getItems()
         console.log('success');
@@ -214,6 +214,7 @@ function addItem(id,name, description,dueDate) {
  */
 function submitItem(id) {
 
+    //let todoItemid = document.getElementById("idForNewElement").value;
     let todoItemname = document.getElementById("nameTextboxID").value;//gets the data entered by the user
     let todoItemDesc = document.getElementById("descriptionTextboxID").value;
     let todoItemDate = document.getElementById("dateTextboxID").value;
@@ -229,7 +230,7 @@ function submitItem(id) {
         alert("Please enter a due date for the task!");
 
     } else {
-        addItem(id,todoItemname, todoItemDesc, todoItemDate);
+        addItem(todoItemname, todoItemDesc, todoItemDate);
         clearAndRefresh();//if name, description and due date have been added then clear the form and refresh the page.
 
     }
@@ -307,8 +308,6 @@ function createItemTable(items) {
     $('#list').html(list);
 }
 
-//let data = require('./server');
-//alert(data);
 
 /**
  * This function allows you to tick a button when you have completed a task whilst simultaneously crossing out that element in the table
@@ -362,3 +361,9 @@ function removeAll(){
         deleteItem(id)
     })
 }
+
+
+
+
+
+

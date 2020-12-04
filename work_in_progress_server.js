@@ -117,9 +117,10 @@ const server = http.createServer((request,response) => {//create a server using 
 
         request.on('data', chunk => {
             data += chunk;
-            //console.log(data); the data here is the new item that needs to be added to the dictionary
+            //id += 1;
+            console.log(data); //the data here is the new item that needs to be added to the dictionary
         })
-        request.on('end', (error,data1,callback) => {
+        request.on('end', (error,data,callback) => {
             if(error){
                 console.log("an error occured")
             }else{
@@ -128,7 +129,7 @@ const server = http.createServer((request,response) => {//create a server using 
                 console.log(typeof jsonData1);
                 console.log(dictionary);
                 console.log(typeof dictionary);
-                let merged = {...jsonData1, ...dictionary.items};
+                let merged = {...jsonData1, ...dictionary};
                 console.log(merged);
                 callback(jsonData1);
             }
@@ -143,7 +144,7 @@ const server = http.createServer((request,response) => {//create a server using 
                 //headers,
                 //method,
                 //url,
-                body: merged //jsonData1
+                body: jsonData1
             }
 
             response.write(JSON.stringify(responseBody));
@@ -195,6 +196,22 @@ server.listen(8080,function(error) {//tells the server to listen on port 8080
         console.log('server is listening on port 8080')
     }
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
