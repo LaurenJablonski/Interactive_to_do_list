@@ -1,7 +1,31 @@
 const http = require('http'); // you get the http library in node.js. Note you have to use require in node.js in order to get a library. This includes the http library into our code inside the http variable
 const fs = require('fs');// this allows us to read another file in our code. this variable fs allows us to do all the file handling that we need to do
 
+var dictionary = {
+    "items": [
 
+        {
+            "ID": 1,
+            "Name": "Walk the dog",
+            "Desc": "25 min walk",
+            "DueDate": "25/09/2020"
+        },
+        {
+            "ID": 2,
+            "Name": "Go to shops",
+            "Desc": "buy bread",
+            "DueDate": "14/09/2020"
+
+        },
+        {
+            "ID": 3,
+            "Name": "give presentation",
+            "Desc": "next jump",
+            "DueDate": "5/10/2020"
+
+        }
+    ]
+};
 
 
 
@@ -38,31 +62,6 @@ const server = http.createServer((request,response) => {//create a server using 
         console.log("hello world");
         response.setHeader('Access-Control-Allow-Origin', '*');
 
-        let dictionary = {
-            "items": [
-
-                {
-                    "ID": 1,
-                    "Name": "Walk the dog",
-                    "Desc": "25 min walk",
-                    "DueDate": "25/09/2020"
-                },
-                {
-                    "ID": 2,
-                    "Name": "Go to shops",
-                    "Desc": "buy bread",
-                    "DueDate": "14/09/2020"
-
-                },
-                {
-                    "ID": 3,
-                    "Name": "give presentation",
-                    "Desc": "next jump",
-                    "DueDate": "5/10/2020"
-
-                }
-            ]
-        }
 
         const responseBody = {
             //headers,
@@ -87,31 +86,7 @@ const server = http.createServer((request,response) => {//create a server using 
     if (request.method === 'POST' && request.url === '/item'){
         response.setHeader('Access-Control-Allow-Origin', '*');
 
-        let dictionary = {
-            "items": [
 
-                {
-                    "ID": 1,
-                    "Name": "Walk the dog",
-                    "Desc": "25 min walk",
-                    "DueDate": "25/09/2020"
-                },
-                {
-                    "ID": 2,
-                    "Name": "Go to shops",
-                    "Desc": "buy bread",
-                    "DueDate": "14/09/2020"
-
-                },
-                {
-                    "ID": 3,
-                    "Name": "give presentation",
-                    "Desc": "next jump",
-                    "DueDate": "5/10/2020"
-
-                }
-            ]
-        }
 
         let data =[];
 
@@ -119,19 +94,29 @@ const server = http.createServer((request,response) => {//create a server using 
             data += chunk;
             //console.log(data); the data here is the new item that needs to be added to the dictionary
         })
-        request.on('end', (error,data1,callback) => {
-            if(error){
-                console.log("an error occured")
-            }else{
-                var jsonData1 = JSON.parse(data);
-                console.log(JSON.parse(data));//using this means that you can see the new item that has been added in the console
-                console.log(typeof jsonData1);
-                console.log(dictionary);
-                console.log(typeof dictionary);
-                let merged = {...jsonData1, ...dictionary.items};
-                console.log(merged);
-                callback(jsonData1);
-            }
+        request.on('end', () => {
+            var newItem = JSON.parse(data);
+
+
+            var length = Object.keys(dictionary['items']).length;
+            console.log(length);
+            var findLastItem = dictionary['items'][length - 1];
+            console.log(findLastItem);
+            newItem['ID'] = findLastItem['ID'] + 1;
+            console.log(newItem['ID']);
+            //let merged = {...jsonData1, ...dictionary.items};
+            //console.log(merged);
+            //callback(jsonData1);
+
+            console.log(dictionary);
+            // var parsedDictionary = JSON.parse(dictionary);
+            // console.log(parsedDictionary);
+            dictionary['items'].push(newItem);
+
+            console.log(dictionary);
+            //dictionary = JSON.stringify(dictionary);
+
+        })
 
 
             //body = dictionary.concat(jsonData1).toString();
@@ -139,45 +124,22 @@ const server = http.createServer((request,response) => {//create a server using 
             response.statuscode = 200;
 
 
-            const responseBody = {
-                //headers,
-                //method,
-                //url,
-                body: merged //jsonData1
-            }
-
-            response.write(JSON.stringify(responseBody));
+            // const responseBody = {
+            //     //headers,
+            //     //method,
+            //     //url,
+            //     body: merged //jsonData1
+            // }
+            //
+            // response.write(JSON.stringify(responseBody));
             response.end();
 
 
 
 
-            // var jsonNewData =  JSON.parse(dictionary).items
-            //  console.log(jsonNewData.DueDate);
-            //
-            // var result = dictionary.concat(body);
-            // console.log(result);
 
-            // body1 = Buffer.concat(body1).toString();
-            // // BEGINNING OF NEW STUFF
-            //
-            // response.on('error', (err) => {
-            //     console.error(err);
-            // });
-            //
-            // response.statusCode = 200;
-            // //response.setHeader('Content-Type', 'application/json');
-            //
-            // const responseBody = { headers, method, url, body1 };
-            //
-            // response.write(JSON.stringify(responseBody));
-            // console.log("the response is" + JSON.stringify(responseBody))
-            // response.end();
+        }
 
-
-
-        })
-    }
 
 
 
