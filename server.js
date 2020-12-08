@@ -1,32 +1,74 @@
 const http = require('http'); // you get the http library in node.js. Note you have to use require in node.js in order to get a library. This includes the http library into our code inside the http variable
 const fs = require('fs');// this allows us to read another file in our code. this variable fs allows us to do all the file handling that we need to do
 
-var dictionary = {
-    "items": [
+// var dictionary = {
+//     "items": [
+//
+//         {
+//             "ID": 1,
+//             "Name": "Walk the dog",
+//             "Desc": "25 min walk",
+//             "DueDate": "25/09/2020"
+//         },
+//         {
+//             "ID": 2,
+//             "Name": "Go to shops",
+//             "Desc": "buy bread",
+//             "DueDate": "14/09/2020"
+//
+//         },
+//         {
+//             "ID": 3,
+//             "Name": "give presentation",
+//             "Desc": "next jump",
+//             "DueDate": "5/10/2020"
+//
+//         }
+//     ]
+// };
 
-        {
-            "ID": 1,
-            "Name": "Walk the dog",
-            "Desc": "25 min walk",
-            "DueDate": "25/09/2020"
-        },
-        {
-            "ID": 2,
-            "Name": "Go to shops",
-            "Desc": "buy bread",
-            "DueDate": "14/09/2020"
 
-        },
-        {
-            "ID": 3,
-            "Name": "give presentation",
-            "Desc": "next jump",
-            "DueDate": "5/10/2020"
 
-        }
-    ]
+let obj = {
+    items: []
 };
 
+fs.exists('dictionary.json', function(exists) {
+
+    if (exists) {
+
+        console.log("yes file exists");
+
+
+        fs.readFile('dictionary.json', function readFileCallback(err, data) {
+
+            if (err) {
+                console.log(err);
+            } else {
+                obj = JSON.parse(data);
+                console.log("here are the items in the dictionary");
+                console.log(obj);//first you just want to read the items in dictionary.json here
+                // onsole.log(data);
+                newItem = obj.items.push({
+                    ID: 4,
+                    Name: 'hello',
+                    Desc: "new item",
+                    DueDate: "5/10/2021"
+                });
+
+                console.log("the new item is:");
+                console.log(newItem);
+
+                let json = JSON.stringify(obj);
+                fs.writeFile('dictionary.json', json);
+
+            }
+        });
+    }else {
+
+        console.log("file not exists");
+    }
+});
 
 
 
@@ -86,8 +128,6 @@ const server = http.createServer((request,response) => {//create a server using 
     if (request.method === 'POST' && request.url === '/item'){
         response.setHeader('Access-Control-Allow-Origin', '*');
 
-
-
         let data =[];
 
         request.on('data', chunk => {
@@ -98,15 +138,12 @@ const server = http.createServer((request,response) => {//create a server using 
             var newItem = JSON.parse(data);
 
 
-            var length = Object.keys(dictionary['items']).length;
+            var length = Object.keys(dictionary['items']).length; //finds the length of the items in the dictionary
             console.log(length);
-            var findLastItem = dictionary['items'][length - 1];
+            var findLastItem = dictionary['items'][length - 1]; //finds the index of hte last item in the dictionary
             console.log(findLastItem);
-            newItem['ID'] = findLastItem['ID'] + 1;
+            newItem['ID'] = findLastItem['ID'] + 1; //adds one to the last index in the dictionary to give you the index of the new item being added to hte dictionary
             console.log(newItem['ID']);
-            //let merged = {...jsonData1, ...dictionary.items};
-            //console.log(merged);
-            //callback(jsonData1);
 
             console.log(dictionary);
             // var parsedDictionary = JSON.parse(dictionary);
@@ -139,6 +176,14 @@ const server = http.createServer((request,response) => {//create a server using 
 
 
         }
+
+    if (request.method === 'DELETE' && request.url === '/item') {
+        response.setHeader('Access-Control-Allow-Origin', '*');
+
+        console.log('this is the delete request');
+
+
+    }
 
 
 
