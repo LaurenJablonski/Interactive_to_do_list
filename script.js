@@ -153,11 +153,11 @@ function getItems(callback) {
         //var items = data.body['items'];//object['properties of the object']
         var jsonData = JSON.parse(data);
         //console.log(items);
-        console.log(jsonData.body.items);
+        console.log(jsonData.body);
         //console.log(items)
         //console.log(data);
         //callback(jsonData.body.items);//if the request was successful then callback(items)
-        callback(jsonData.body.items); //without this the html of your calendar doesn't load
+        callback(jsonData.body); //without this the html of your calendar doesn't load
 
 
 
