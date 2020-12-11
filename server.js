@@ -54,7 +54,7 @@ const server = http.createServer((request,response) => {//create a server using 
     }
 
 
-    if (request.method === 'GET' && request.url === '/item'){
+    if (request.method === 'GET' && request.url === '/item') {
         console.log("hello world");
         response.setHeader('Access-Control-Allow-Origin', '*');
 
@@ -73,14 +73,12 @@ const server = http.createServer((request,response) => {//create a server using 
         return responseBody;
 
 
-
-
     }
 
-    if (request.method === 'POST' && request.url === '/item'){
+    if (request.method === 'POST' && request.url === '/item') {
         response.setHeader('Access-Control-Allow-Origin', '*');
 
-        let data =[];
+        let data = [];
 
         request.on('data', chunk => {
             data += chunk;
@@ -88,71 +86,50 @@ const server = http.createServer((request,response) => {//create a server using 
         })
         request.on('end', () => {
 
-            let newItem = {
-                ID: 4,
-                Name: 'hello',
-                Desc: "new item",
-                DueDate: "5/10/2021"
+            // let newItem = {
+            //     ID: 4,
+            //     Name: 'hello',
+            //     Desc: "new item",
+            //     DueDate: "5/10/2021"
+            //
+            // };
+            //
+            // items.push(newItem);
+            //
+            // //let newList = JSON.stringify(showItems);
+            //
+            // //fs.writeFile('dictionary.json', JSON.stringify(items));
+            // fs.writeFile("dictionary.json", JSON.stringify(items), err => {
+            //
+            //     // Checking for errors
+            //     if (err) throw err;
+            //
+            //     console.log("Done writing"); // Success
+            // });
 
-            };
+            var newItem = JSON.parse(data);
 
+
+            var length = Object.keys(items).length; //finds the length of the items in the dictionary
+            var length = Object.keys(items).length;
+            console.log(length);
+            var findLastItem = items[length - 1]; //finds the index of hte last item in the dictionary
+            console.log(findLastItem);
+            newItem['ID'] = findLastItem['ID'] + 1; //adds one to the last index in the dictionary to give you the index of the new item being added to hte dictionary
+            console.log(newItem['ID']);
+
+            //console.log(dictionary);
+            // var parsedDictionary = JSON.parse(dictionary);
+            // console.log(parsedDictionary);
             items.push(newItem);
 
-            //let newList = JSON.stringify(showItems);
+            //console.log(dictionary);
+            //newDictionary = JSON.stringify(items);
 
-            //fs.writeFile('dictionary.json', JSON.stringify(items));
             fs.writeFile("dictionary.json", JSON.stringify(items), err => {
+                console.log("success writing to the dictionary")
 
-                // Checking for errors
-                if (err) throw err;
-
-                console.log("Done writing"); // Success
-            });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            //var newItem = JSON.parse(data);
-
-
-           // var length = Object.keys(dictionary['items']).length; //finds the length of the items in the dictionary
-           //  var length = Object.keys(items).length;
-           //  console.log(length);
-           //  var findLastItem = dictionary['items'][length - 1]; //finds the index of hte last item in the dictionary
-           //  console.log(findLastItem);
-           //  newItem['ID'] = findLastItem['ID'] + 1; //adds one to the last index in the dictionary to give you the index of the new item being added to hte dictionary
-           //  console.log(newItem['ID']);
-           //
-           //  console.log(dictionary);
-           //  // var parsedDictionary = JSON.parse(dictionary);
-           //  // console.log(parsedDictionary);
-           //  dictionary['items'].push(newItem);
-           //
-           //  console.log(dictionary);
-            //dictionary = JSON.stringify(dictionary);
-
-        })
-
-
+            })
 
 
             //body = dictionary.concat(jsonData1).toString();
@@ -170,11 +147,11 @@ const server = http.createServer((request,response) => {//create a server using 
             // response.write(JSON.stringify(responseBody));
             response.end();
 
+        });
 
 
+    }
 
-
-        }
 
     if (request.method === 'DELETE' && request.url === '/item') {
         response.setHeader('Access-Control-Allow-Origin', '*');
@@ -185,13 +162,7 @@ const server = http.createServer((request,response) => {//create a server using 
     }
 
 
-
-
-
-
 });
-
-
 
 
 server.listen(8080,function(error) {//tells the server to listen on port 8080
@@ -200,7 +171,7 @@ server.listen(8080,function(error) {//tells the server to listen on port 8080
     } else {
         console.log('server is listening on port 8080')
     }
-})
+});
 
 
 
