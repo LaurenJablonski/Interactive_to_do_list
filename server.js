@@ -86,16 +86,23 @@ const server = http.createServer((request,response) => {//create a server using 
         })
         request.on('end', () => {
 
-            var newItem = JSON.parse(data);
+            function calculateNewIndex(){
+
+                var newItem = JSON.parse(data);
 
 
-            var length = Object.keys(items).length; //finds the length of the items in the dictionary
-            var length = Object.keys(items).length;
-            console.log(length);
-            var findLastItem = items[length - 1]; //finds the index of hte last item in the dictionary
-            console.log(findLastItem);
-            newItem['ID'] = findLastItem['ID'] + 1; //adds one to the last index in the dictionary to give you the index of the new item being added to hte dictionary
-            console.log(newItem['ID']);
+                var length = Object.keys(items).length; //finds the length of the items in the dictionary
+                var length = Object.keys(items).length;
+                console.log(length);
+                var findLastItem = items[length - 1]; //finds the index of hte last item in the dictionary
+                console.log(findLastItem);
+                newItem['ID'] = findLastItem['ID'] + 1; //adds one to the last index in the dictionary to give you the index of the new item being added to hte dictionary
+                console.log(newItem['ID']);
+                return newItem
+
+            }
+            newItem = calculateNewIndex();
+
 
 
             items.push(newItem);
@@ -127,11 +134,12 @@ const server = http.createServer((request,response) => {//create a server using 
             data += chunk;
             //console.log(data); //the data here is the new item that needs to be added to the dictionary
         })
-        console.log(data);
+        //console.log(data);
 
         console.log('this is the delete request');
         console.log(items[0]);
-        delete items[0];
+        //delete items[0]; this didn't reindex the array after an element was removed
+        items.splice(1,1) //now when an element is removed the array is reindexed
 
 
         fs.writeFile("dictionary.json", JSON.stringify(items), err => {

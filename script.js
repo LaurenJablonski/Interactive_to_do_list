@@ -243,6 +243,7 @@ function deleteItem(id){
         console.log("hello");
         clearAndRefresh();// if its successful then the form is cleared, the page is refreshed to display the new items
         getItems();
+        refreshList();
     }, function () {
         console.log("An error occured in deleteItem");// if unsuccessful then the console tells you that an error has occured
     });
