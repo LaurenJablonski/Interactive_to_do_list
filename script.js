@@ -132,7 +132,7 @@ function jump() {
  */
 function makeRequest(method, resource, body, successCb, errorCb) {
     var baseUrl = 'http://localhost:8080';
-    console.log(JSON.stringify(body));
+    //console.log(JSON.stringify(body));
     $.ajax({ //ajax= techinique for accessing web servers from a webpage so this is where the connection is being made to the API. It sends teh http requests easily and quickly as you don't have to reload the page.
         method: method,
         url: baseUrl + resource,
@@ -182,21 +182,14 @@ function addItem(name, description,dueDate) {
     var body = {// creates the variable for the body that will be used as a parameter in the makeRequest function
         'Name': name, 'Desc': description,
         'DueDate': dueDate};
-    console.log("hiya");
-    //var jsonData = json(body1)
-    console.log([body]);// so this is the thing i want to display which i am now sending to the console instead of acc showing on the page
-    //console.log(JSON.stringify(body1));
 
+    console.log([body]);// so this is the thing i want to display which i am now sending to the console instead of acc showing on the page
 
     makeRequest('POST', '/item', body, function (data) {
         /** It makes the request and if the request is successful then it executes getItems(). If no success then it tells you there's an error*/
         //callback(jsonData.body.items) = getItems()
         console.log('success');
         getItems();
-        //callback(body1);
-        //console.log("hellloo");
-        //console.log(jsonData.body.items.concat(body1)); //think I then need to callback this for it to actually show in the html
-        //console.log(callback.concat(body1));
 
     }, function () {
         console.log("An error occured in addItem");
@@ -241,7 +234,13 @@ function clearAndRefresh(){
 }
 
 function deleteItem(id){
-    makeRequest('DELETE','/item/'+ id, function (data){ //appends the id to the item parameter
+    console.log(" this is deleteitems");
+
+    var body = {// creates the variable for the body that will be used as a parameter in the makeRequest function
+         'ID': id};
+
+    makeRequest('DELETE','/item', body, function (data){ //appends the id to the item parameter
+        console.log("hello");
         clearAndRefresh();// if its successful then the form is cleared, the page is refreshed to display the new items
         getItems();
     }, function () {

@@ -35,8 +35,8 @@ const server = http.createServer((request,response) => {//create a server using 
 
 
     if (request.method === 'OPTIONS' && request.url === '/item') {
-        console.log("PREFLIGHT OPTIONS REQUEST")
-        console.log(request.headers);
+        //console.log("PREFLIGHT OPTIONS REQUEST")
+        //console.log(request.headers);
 
         //handles the preflight request
 
@@ -63,7 +63,7 @@ const server = http.createServer((request,response) => {//create a server using 
             //headers,
             //method,
             //url,
-            body: items //confused, think this should be items but it doesn't seem to make a difference if i keep as dictionary
+            body: items
         }
 
         response.write(JSON.stringify(responseBody))
@@ -78,34 +78,13 @@ const server = http.createServer((request,response) => {//create a server using 
     if (request.method === 'POST' && request.url === '/item') {
         response.setHeader('Access-Control-Allow-Origin', '*');
 
-        let data = [];
+        let data = []; //the new item that's being added
 
-        request.on('data', chunk => {
+        request.on('data', chunk => { //request object is a stream => stream allows us to process data  by listening to the streams data and end events
             data += chunk;
             //console.log(data); the data here is the new item that needs to be added to the dictionary
         })
         request.on('end', () => {
-
-            // let newItem = {
-            //     ID: 4,
-            //     Name: 'hello',
-            //     Desc: "new item",
-            //     DueDate: "5/10/2021"
-            //
-            // };
-            //
-            // items.push(newItem);
-            //
-            // //let newList = JSON.stringify(showItems);
-            //
-            // //fs.writeFile('dictionary.json', JSON.stringify(items));
-            // fs.writeFile("dictionary.json", JSON.stringify(items), err => {
-            //
-            //     // Checking for errors
-            //     if (err) throw err;
-            //
-            //     console.log("Done writing"); // Success
-            // });
 
             var newItem = JSON.parse(data);
 
@@ -118,13 +97,8 @@ const server = http.createServer((request,response) => {//create a server using 
             newItem['ID'] = findLastItem['ID'] + 1; //adds one to the last index in the dictionary to give you the index of the new item being added to hte dictionary
             console.log(newItem['ID']);
 
-            //console.log(dictionary);
-            // var parsedDictionary = JSON.parse(dictionary);
-            // console.log(parsedDictionary);
-            items.push(newItem);
 
-            //console.log(dictionary);
-            //newDictionary = JSON.stringify(items);
+            items.push(newItem);
 
             fs.writeFile("dictionary.json", JSON.stringify(items), err => {
                 console.log("success writing to the dictionary")
@@ -132,19 +106,8 @@ const server = http.createServer((request,response) => {//create a server using 
             })
 
 
-            //body = dictionary.concat(jsonData1).toString();
-
             response.statuscode = 200;
 
-
-            // const responseBody = {
-            //     //headers,
-            //     //method,
-            //     //url,
-            //     body: merged //jsonData1
-            // }
-            //
-            // response.write(JSON.stringify(responseBody));
             response.end();
 
         });
@@ -153,10 +116,43 @@ const server = http.createServer((request,response) => {//create a server using 
     }
 
 
-    if (request.method === 'DELETE' && request.url === '/item') {
+    if (request.method === 'DELETE') {
         response.setHeader('Access-Control-Allow-Origin', '*');
+        console.log(request.url);
+        console.log(request.data);
+
+        let data = []; //the new item that's being added
+
+        request.on('data', chunk => { //request object is a stream => stream allows us to process data  by listening to the streams data and end events
+            data += chunk;
+            //console.log(data); //the data here is the new item that needs to be added to the dictionary
+        })
+        console.log(data);
 
         console.log('this is the delete request');
+        console.log(items[0]);
+        delete items[0];
+
+
+        fs.writeFile("dictionary.json", JSON.stringify(items), err => {
+            console.log("success writing to the dictionary")
+
+        })
+
+// not sure if I would want to rewrite over the file or just send a response back that has the deleted item
+        // const responseBody = {
+        //     //headers,
+        //     //method,
+        //     //url,
+        //     body: items
+        // }
+        //
+        // response.write(JSON.stringify(responseBody))
+        // console.log(responseBody);
+        //
+        // response.end(); //end the response
+        // return responseBody;
+
 
 
     }
