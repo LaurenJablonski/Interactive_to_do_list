@@ -116,27 +116,42 @@ const server = http.createServer((request,response) => {//create a server using 
         //console.log(items[id]);
         console.log('this is the delete request');
         console.log(items[1]);
-        console.log(items[1]['ID']);
+        //console.log(items[1]['ID']);
         //delete items[0]; this didn't reindex the array after an element was removed
         //items.splice(1,1) //now when an element is removed the array is reindexed
-        items.splice(1,1) //it doesn't know what to delete so it's just deleting the first item ([0])
+         //it doesn't know what to delete so it's just deletes one element at index ([1])
+        var deletedItemId = request.url.split('/item/')[1]
 
-        var deletedItem = items[1] //get the deleted item
-
-        var deletedItemId = items[1]['ID'] //get the ID of the deleted item
-
-        if(items['ID'] > deletedItemId){ //if elements have an ID greater than the ID of te deleted item, then drop their id by 1
-            newIds['ID'] = items['ID'] - 1;
-            items.push(newIds); //then push these new ID's to the dictionary
-        } else{
-                console.log("ID of elements before deleted element remain the same")//for all the elements with an id less than the deleted item these don't change at all
+        var i;
+        for (i = 0; i < items.length; i++) {
+            if( deletedItemId == items[i]['ID']){
+                console.log(items[i]['ID']);
+                console.log('true');
+                items.splice(i,1)
             }
+
+        }
+
+        // var deletedItem = items[1] //get the deleted item
+        //
+        // var deletedItemId = items[1]['ID'] //get the ID of the deleted item
+        //
+        // if(items['ID'] > deletedItemId){ //if elements have an ID greater than the ID of te deleted item, then drop their id by 1
+        //     newIds['ID'] = items['ID'] - 1;
+        //     items.push(newIds); //then push these new ID's to the dictionary
+        // } else{
+        //         console.log("ID of elements before deleted element remain the same")//for all the elements with an id less than the deleted item these don't change at all
+        //     }
 
 
         fs.writeFile("dictionary.json", JSON.stringify(items), err => {
             console.log("success writing to the dictionary")
 
         })
+
+        response.statuscode = 200;
+
+        response.end();
 
         // function reshiftIdAfterDelete(){
         //     var deletedItem = items[1]

@@ -189,7 +189,12 @@ function addItem(name, description,dueDate) {
         /** It makes the request and if the request is successful then it executes getItems(). If no success then it tells you there's an error*/
         //callback(jsonData.body.items) = getItems()
         console.log('success');
-        getItems();
+        // getItems(function (items) {
+        //     globalItems = items
+        //     createItemTable(items);
+        //     showCalendar(currentMonth,currentYear,items);
+        // }
+        // );
 
     }, function () {
         console.log("An error occured in addItem");
@@ -242,10 +247,10 @@ function deleteItem(id){
     makeRequest('DELETE','/item/' + id, body, function (data){ //appends the id to the item parameter
         console.log("hello");
         clearAndRefresh();// if its successful then the form is cleared, the page is refreshed to display the new items
-        getItems();
+        //getItems();
         refreshList();
-        return id;
-        console.log("the id is " + id);
+        // return id;
+        // console.log("the id is " + id);
     }, function () {
         console.log("An error occured in deleteItem");// if unsuccessful then the console tells you that an error has occured
     });
