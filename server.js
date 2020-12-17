@@ -1,32 +1,6 @@
 const http = require('http'); // you get the http library in node.js. Note you have to use require in node.js in order to get a library. This includes the http library into our code inside the http variable
 const fs = require('fs');// this allows us to read another file in our code. this variable fs allows us to do all the file handling that we need to do
 
-// var dictionary = {
-//     "items": [
-//
-//         {
-//             "ID": 1,
-//             "Name": "Walk the dog",
-//             "Desc": "25 min walk",
-//             "DueDate": "25/09/2020"
-//         },
-//         {
-//             "ID": 2,
-//             "Name": "Go to shops",
-//             "Desc": "buy bread",
-//             "DueDate": "14/09/2020"
-//
-//         },
-//         {
-//             "ID": 3,
-//             "Name": "give presentation",
-//             "Desc": "next jump",
-//             "DueDate": "5/10/2020"
-//
-//         }
-//     ]
-// };
-
 const server = http.createServer((request,response) => {//create a server using the http library you just imported and call the create server function on this object. The create server function takes a function that has 2 parameters, request and response which is going to handle all the activity on our server. SO everytime someone requests a page on our server, it is going to call this function.
 
     const {headers, method, url} = request; //this request object is an instant of an Incoming Message
@@ -34,7 +8,7 @@ const server = http.createServer((request,response) => {//create a server using 
     const items = require("./dictionary"); //this reads the json file
 
 
-    if (request.method === 'OPTIONS' && request.url === '/item') {
+    if (request.method === 'OPTIONS') {
         //console.log("PREFLIGHT OPTIONS REQUEST")
         //console.log(request.headers);
 
@@ -75,7 +49,7 @@ const server = http.createServer((request,response) => {//create a server using 
 
     }
 
-    if (request.method === 'POST' && request.url === '/item') {
+    if (request.method === 'POST') {
         response.setHeader('Access-Control-Allow-Origin', '*');
 
         let data = []; //the new item that's being added
@@ -92,7 +66,6 @@ const server = http.createServer((request,response) => {//create a server using 
 
 
                 var length = Object.keys(items).length; //finds the length of the items in the dictionary
-                var length = Object.keys(items).length;
                 console.log(length);
                 var findLastItem = items[length - 1]; //finds the index of hte last item in the dictionary
                 console.log(findLastItem);
@@ -102,8 +75,6 @@ const server = http.createServer((request,response) => {//create a server using 
 
             }
             newItem = calculateNewIndex();
-
-
 
             items.push(newItem);
 
@@ -124,22 +95,42 @@ const server = http.createServer((request,response) => {//create a server using 
 
 
     if (request.method === 'DELETE') {
+
+        console.log("hello worlddd");
         response.setHeader('Access-Control-Allow-Origin', '*');
         console.log(request.url);
         console.log(request.data);
+        //console.log(data['ID']);
 
-        let data = []; //the new item that's being added
+        //whether I have lines 109-115 doesn't seem to make a differnce to my code - why? why doesn't each bit of data in teh stream get processed chunk by chunk? or does it just process that one element that is being deleted
 
-        request.on('data', chunk => { //request object is a stream => stream allows us to process data  by listening to the streams data and end events
-            data += chunk;
-            //console.log(data); //the data here is the new item that needs to be added to the dictionary
-        })
+        // let data = []; //the new item that's being added
+        //
+        // request.on('data', chunk => { //request object is a stream => stream allows us to process data  by listening to the streams data and end events
+        //     data += chunk;
+        //     //console.log(data); //the data here is the new item that needs to be added to the dictionary
+        // })
         //console.log(data);
 
+        console.log(items);
+        //console.log(items[id]);
         console.log('this is the delete request');
-        console.log(items[0]);
+        console.log(items[1]);
+        console.log(items[1]['ID']);
         //delete items[0]; this didn't reindex the array after an element was removed
-        items.splice(1,1) //now when an element is removed the array is reindexed
+        //items.splice(1,1) //now when an element is removed the array is reindexed
+        items.splice(1,1) //it doesn't know what to delete so it's just deleting the first item ([0])
+
+        var deletedItem = items[1] //get the deleted item
+
+        var deletedItemId = items[1]['ID'] //get the ID of the deleted item
+
+        if(items['ID'] > deletedItemId){ //if elements have an ID greater than the ID of te deleted item, then drop their id by 1
+            newIds['ID'] = items['ID'] - 1;
+            items.push(newIds); //then push these new ID's to the dictionary
+        } else{
+                console.log("ID of elements before deleted element remain the same")//for all the elements with an id less than the deleted item these don't change at all
+            }
 
 
         fs.writeFile("dictionary.json", JSON.stringify(items), err => {
@@ -147,21 +138,19 @@ const server = http.createServer((request,response) => {//create a server using 
 
         })
 
-// not sure if I would want to rewrite over the file or just send a response back that has the deleted item
-        // const responseBody = {
-        //     //headers,
-        //     //method,
-        //     //url,
-        //     body: items
+        // function reshiftIdAfterDelete(){
+        //     var deletedItem = items[1]
+        //
+        //     var deletedItemId = items[1]['ID']
+        //
+        //     if(items['ID'] > deletedItemId){
+        //         newIds['ID'] = items['ID'] + 1;
+        //         items.push(newIds);
+        // } else{
+        //         console.log("ID of elements before deleted element remain the same")
+        //     }
+        //
         // }
-        //
-        // response.write(JSON.stringify(responseBody))
-        // console.log(responseBody);
-        //
-        // response.end(); //end the response
-        // return responseBody;
-
-
 
     }
 

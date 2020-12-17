@@ -239,11 +239,13 @@ function deleteItem(id){
     var body = {// creates the variable for the body that will be used as a parameter in the makeRequest function
          'ID': id};
 
-    makeRequest('DELETE','/item', body, function (data){ //appends the id to the item parameter
+    makeRequest('DELETE','/item/' + id, body, function (data){ //appends the id to the item parameter
         console.log("hello");
         clearAndRefresh();// if its successful then the form is cleared, the page is refreshed to display the new items
         getItems();
         refreshList();
+        return id;
+        console.log("the id is " + id);
     }, function () {
         console.log("An error occured in deleteItem");// if unsuccessful then the console tells you that an error has occured
     });
