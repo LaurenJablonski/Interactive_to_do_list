@@ -9,10 +9,6 @@ const server = http.createServer((request,response) => {//create a server using 
 
 
     if (request.method === 'OPTIONS') {
-        //console.log("PREFLIGHT OPTIONS REQUEST")
-        //console.log(request.headers);
-
-        //handles the preflight request
 
         var handleCors = function (request, response) {
             console.log("its a preflight request");
@@ -100,26 +96,11 @@ const server = http.createServer((request,response) => {//create a server using 
         response.setHeader('Access-Control-Allow-Origin', '*');
         console.log(request.url);
         console.log(request.data);
-        //console.log(data['ID']);
-
-        //whether I have lines 109-115 doesn't seem to make a differnce to my code - why? why doesn't each bit of data in teh stream get processed chunk by chunk? or does it just process that one element that is being deleted
-
-        // let data = []; //the new item that's being added
-        //
-        // request.on('data', chunk => { //request object is a stream => stream allows us to process data  by listening to the streams data and end events
-        //     data += chunk;
-        //     //console.log(data); //the data here is the new item that needs to be added to the dictionary
-        // })
-        //console.log(data);
 
         console.log(items);
         //console.log(items[id]);
         console.log('this is the delete request');
         console.log(items[1]);
-        //console.log(items[1]['ID']);
-        //delete items[0]; this didn't reindex the array after an element was removed
-        //items.splice(1,1) //now when an element is removed the array is reindexed
-         //it doesn't know what to delete so it's just deletes one element at index ([1])
         var deletedItemId = request.url.split('/item/')[1]
 
         var i;
@@ -132,18 +113,6 @@ const server = http.createServer((request,response) => {//create a server using 
 
         }
 
-        // var deletedItem = items[1] //get the deleted item
-        //
-        // var deletedItemId = items[1]['ID'] //get the ID of the deleted item
-        //
-        // if(items['ID'] > deletedItemId){ //if elements have an ID greater than the ID of te deleted item, then drop their id by 1
-        //     newIds['ID'] = items['ID'] - 1;
-        //     items.push(newIds); //then push these new ID's to the dictionary
-        // } else{
-        //         console.log("ID of elements before deleted element remain the same")//for all the elements with an id less than the deleted item these don't change at all
-        //     }
-
-
         fs.writeFile("dictionary.json", JSON.stringify(items), err => {
             console.log("success writing to the dictionary")
 
@@ -152,20 +121,6 @@ const server = http.createServer((request,response) => {//create a server using 
         response.statuscode = 200;
 
         response.end();
-
-        // function reshiftIdAfterDelete(){
-        //     var deletedItem = items[1]
-        //
-        //     var deletedItemId = items[1]['ID']
-        //
-        //     if(items['ID'] > deletedItemId){
-        //         newIds['ID'] = items['ID'] + 1;
-        //         items.push(newIds);
-        // } else{
-        //         console.log("ID of elements before deleted element remain the same")
-        //     }
-        //
-        // }
 
     }
 
