@@ -23,7 +23,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Project name</a>
+      <a class="navbar-brand" href="#">To Do List Project</a>
     </div>
     <div id="navbar" class="collapse navbar-collapse">
       <ul class="nav navbar-nav">
@@ -46,18 +46,18 @@
       <div id="moveBoxes" style="left: 80%">
         <form class="form-inline" style="left: 80%">
           <select class="form-control col-sm-4" name="month" id="month" onchange="jump()">
-            <option value=0>Jan</option><!-- values for the drop down menu for the jump to button -->
-            <option value=1>Feb</option>
-            <option value=2>Mar</option>
-            <option value=3>Apr</option>
+            <option value=0>January</option><!-- values for the drop down menu for the jump to button -->
+            <option value=1>February</option>
+            <option value=2>March</option>
+            <option value=3>April</option>
             <option value=4>May</option>
-            <option value=5>Jun</option>
-            <option value=6>Jul</option>
-            <option value=7>Aug</option>
-            <option value=8>Sep</option>
-            <option value=9>Oct</option>
-            <option value=10>Nov</option>
-            <option value=11>Dec</option>
+            <option value=5>June</option>
+            <option value=6>July</option>
+            <option value=7>August</option>
+            <option value=8>September</option>
+            <option value=9>October</option>
+            <option value=10>November</option>
+            <option value=11>December</option>
           </select>
 
 
@@ -73,6 +73,7 @@
       <thead>
       <tr id="calendertable">
 
+        <button id="previous" onclick="previous()">&#8249;</button>
         <th style="background-color: #F16227">Sun</th><!-- defines the headers in the table -->
         <th style="background-color: #F16227">Mon</th>
         <th style="background-color: #F16227">Tue</th>
@@ -80,6 +81,7 @@
         <th style="background-color: #F16227">Thu</th>
         <th style="background-color: #F16227">Fri</th>
         <th style="background-color: #F16227">Sat</th>
+        <button id="next" onclick="next()">&#8250;</button>
 
       </tr>
       </thead>
@@ -88,13 +90,6 @@
       </tbody>
     </table>
 
-    <div class="form-inline" id="forwardAndBackButtons">
-      <button class="btn btn-outline-primary col-sm-6" id="previous" onclick="previous()">Prev</button>
-      <button class="btn btn-outline-primary col-sm-6" id="next" onclick="next()">Next</button>
-
-      <br/>
-
-    </div>
 
 
   </div>
@@ -123,6 +118,10 @@
 <script src="script.js"></script>
 <!-- <script src="server.js"></script> -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>

@@ -50,6 +50,7 @@ function showCalendar(month, year,items) {
                 let cellText = document.createTextNode("");//creates a textnode with a specified text, which is empty in this instance. (think this is the start of the calendar that has blank spaces in some of the cells).
                 cell.appendChild(cellText);//appends a node as the last child of a node so appends cellText as the last child of the cell node (think cell node is the parent node and cell text is the child node)
                 row.appendChild(cell);//appends cell(child node) to row(parent node)
+
             }
             else if (date > daysInMonth) {// if a date value is more than the number of days in a month then it breaks.- this must indiciate when the next month starts
                 break;
@@ -64,7 +65,7 @@ function showCalendar(month, year,items) {
                 items.forEach(i => {
                     var dueDateForCalendar = new Date(i['DueDate']);// this variable defines the due date that will be on the calendar equal to the due date inputted by the user, where the date inputted by the user will then we taken as the new date.
                     if (date === dueDateForCalendar.getDate() && month === dueDateForCalendar.getMonth() && year === dueDateForCalendar.getFullYear()){
-                        cell.classList.add("bg-primary");// if a certain date matches the due date, then it will turn that particular cell dark blue
+                        cell.classList.add("bg-danger");// if a certain date matches the due date, then it will turn that particular cell dark blue
 
                         // when we hover over the cell we want the task name  and description to appear:
                         // there were other ways of doing this but they needed the the cell to have an id or a class which I was unsure how to do with the way I have created the cells in for loops. So I found that setting the attributes seperately was more appropriate here.
@@ -275,7 +276,7 @@ function deleteItem(id){
  */
 function createItemTable(items) {
     //alert(JSON.stringify(items[2]['DueDate']));
-    var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center">Tick</th><th style="text-align:center">Cross out</th><th style="text-align:center">Name</th><th style="text-align:center">Description</th><th style="text-align:center">Days remaining</th><th style="text-align:center">Delete</th></tr>';
+    var list = '<table id="toDoTable" style="width:100%" position:absolute ><tr><th style="text-align:center"></th><th style="text-align:center">Task</th><th style="text-align:center">Task Description</th><th style="text-align:center">Days remaining</th><th style="text-align:center">Delete</th></tr>';
     var now = new Date();
 
     items.forEach(i => {
@@ -299,8 +300,7 @@ function createItemTable(items) {
 
         // as you pass through the loop these items are sdded to the page
         element = '<div>'
-        element += '<tr><td><input type="checkbox" id="myCheck" class="tick_button" onclick="tickFunction()" ></td>';
-        element += '<td><input type="checkbox" id="myCross" class="strike_button" onclick="strikeFunction()" ></td>';
+        element += '<tr></tr><td><input type="checkbox" id="myCross" class="strike_button" onclick="strikeFunction()" ></td>';
         element += '<td>' + i['Name'] + '</td>'; // shouldn't this be changed to dictionary?
         element += '<td>' + i['Desc'] + '</td>';
         element += '<td>' + daysWithText + '</td>';

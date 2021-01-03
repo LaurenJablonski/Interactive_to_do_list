@@ -7,6 +7,8 @@ td {
     padding: 5px 10px;
 }
 
+
+
 tr.strikeout td:before {
     content: " ";
     position: absolute;
@@ -22,21 +24,29 @@ tr.strikeout td:before {
 
 
 p{
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Helvetica, sans-serif;
 }
 
 h1{
-    font-size:70px;
+    font-size:60px;
     color:white;
-    font-weight: 900;
+    font-weight: 700;
     width: 100%;
     background-color: #F16227;
     display:inline-block;
     padding-top:5rem;
+    font-family: 'Helvetica', sans-serif;
 }
 
-h3{
-    font-size: 26px;
+h3 {
+    font-size: 27px;
+    position: relative;
+    left: 120%;
+    margin: 0px;
+    font-family: 'Helvetica', sans-serif;
+
+
+
 }
 #deleteButton{
     background-color: white;
@@ -51,7 +61,7 @@ body {
     color: black;
     background-color: white;
     text-align: center;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family:'Helvetica', sans-serif;
     font-size: 20px;
 }
 
@@ -62,6 +72,19 @@ input{
     color:white;
     background-color: #F16227 ;
     border-color: #F16227;
+    font-family: 'Helvetica', sans-serif;
+    width: 30px;
+    height: 40px;
+    border-radius: 20%;
+    border: 1px solid white;
+}
+
+#button1:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+    background-color: black;
+    color:  #F16227;
+
 }
 
 #button2{
@@ -69,8 +92,23 @@ input{
     background-color: #F16227 ;
     border-color: #F16227;
     position: absolute;
-    left: 90%;
+    left: 69%;
+    font-family: 'Helvetica', sans-serif;
+    border-radius: 10%;
+    border: 1px solid white;
+    height: 40px;
 
+}
+
+#button2:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+
+
+}
+
+#deleteButton:hover{
+    transform: scale(1.1);
 }
 img{
     display:inline-block;
@@ -87,20 +125,58 @@ img{
     margin: auto;
     width: 40%;
     padding: 10px;
+    font-family: 'Helvetica', sans-serif;
 }
 
 #next{
-    left:220%;
+    text-align: center;
+    background-color: #F16227;
+    margin: 0;
+    position: relative;
+    top: 43px;
+    left: 280%;
+
+    width: 30px;
+    height: 40px;
+    border-radius: 20%;
+    border: 1px solid white;
+
+}
+
+#next:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+    background-color: black;
+    color:  #F16227;
+
 }
 
 #previous{
     text-align: center;
+    background-color: #F16227;
+    margin: 0;
+    position: relative;
+    top: 43px;
+    left: -60%;
+
+    width: 30px;
+    height: 40px;
+    border-radius: 20%;
+    border: 1px solid white;
+}
+
+#previous:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+    background-color: 	black; /*#505050 ;*/
+    color:  #F16227;
 
 }
 
 #month{
     left:450%;
-    top:5%
+    top:5%;
+    margin: 1px;
 }
 
 #moveBoxes{
